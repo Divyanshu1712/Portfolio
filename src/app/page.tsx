@@ -435,7 +435,7 @@ export default function Home() {
                         </svg>
                       </a>
                       <a 
-                        href="https://www.instagram.com/_._divyanshu__" 
+                        href="https://www.instagram.com/_._divyanshu___" 
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all duration-300"
