@@ -3,6 +3,17 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 
+// Define the ExperienceItem interface
+interface ExperienceItem {
+  role: string;
+  company: string;
+  period: string;
+  location: string;
+  description?: string;
+  achievements: string[];
+  skills: string[];
+}
+
 const experiences: ExperienceItem[] = [
   {
     role: 'UI/UX DESIGNING Intern',
