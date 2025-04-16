@@ -65,7 +65,7 @@ export default function About() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="text-xl text-muted-foreground"
             >
-              I'm a Full Stack Developer with expertise in Web3 and Blockchain technologies 🚀
+              I&apos;m a Full Stack Developer with expertise in Web3 and Blockchain technologies 🚀
             </motion.p>
             <motion.p
               initial={{ opacity: 0, y: 20 }}

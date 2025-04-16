@@ -86,7 +86,7 @@ export default function TwitterFeed() {
         }
         const data = await response.json();
         setTweets(data);
-      } catch (err) {
+      } catch (_) {
         setError('Failed to load tweets. Please try again later.');
         // Fallback to static tweets if API fails
         setTweets([
@@ -116,7 +116,7 @@ export default function TwitterFeed() {
           },
           {
             id: '3',
-            text: 'Working on a new open-source project. Can\'t wait to share it with the community!',
+            text: 'Working on a new open-source project. Can&apos;t wait to share it with the community!',
             author: {
               name: 'Divyanshu Srivastava',
               handle: '@Divyans19896602',
