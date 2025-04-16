@@ -1,26 +1,202 @@
-@import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+    --muted: 0 0% 87%;
+
+    --card: 0 0% 3%;
+    --card-foreground: 0 0% 100%;
+ 
+    --popover: 0 0% 3%;
+    --popover-foreground: 0 0% 100%;
+ 
+    --primary: 0 0% 100%;
+    --primary-foreground: 0 0% 0%;
+ 
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 0 0% 90%;
+ 
+    --accent: 0 0% 100%;
+    --accent-foreground: 0 0% 0%;
+ 
+    --destructive: 0 0% 100%;
+    --destructive-foreground: 0 0% 0%;
+
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 0 0% 100%;
+ 
+    --radius: 0.5rem;
+  }
+}
+ 
+@layer base {
+  * {
+    @apply border-white/20;
+  }
+  body {
+    @apply bg-black text-white antialiased;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold text-white tracking-tight;
+  }
+  p {
+    @apply text-[#E0E0E0];
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Custom gradient backgrounds */
+.gradient-text {
+  @apply bg-gradient-to-b from-white via-white/90 to-white/70 bg-clip-text text-transparent;
 }
+
+.gradient-bg {
+  @apply bg-gradient-to-br from-white/10 via-white/5 to-transparent;
+}
+
+.gradient-border {
+  @apply border border-transparent bg-gradient-to-r from-white/20 via-white/10 to-transparent bg-clip-border;
+}
+
+/* Custom hover effects */
+.hover-lift {
+  @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_30px_-10px_rgba(255,255,255,0.3)];
+}
+
+.hover-glow {
+  @apply transition-all duration-300 hover:shadow-[0_0_30px_-10px_rgba(255,255,255,0.5)];
+}
+
+/* Button styles */
+.btn {
+  @apply inline-flex items-center justify-center rounded-lg font-medium 
+         transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed
+         focus:outline-none focus:ring-2 focus:ring-white/20 focus:ring-offset-2 focus:ring-offset-black;
+}
+
+/* Button sizes */
+.btn-sm {
+  @apply text-sm px-3 py-1.5;
+}
+
+.btn-md {
+  @apply text-base px-4 py-2;
+}
+
+.btn-lg {
+  @apply text-lg px-6 py-3;
+}
+
+/* Primary Button */
+.btn-primary {
+  @apply bg-white text-black hover:bg-black hover:text-white border border-white;
+}
+
+/* Secondary Button */
+.btn-secondary {
+  @apply bg-transparent text-white border border-white 
+         hover:bg-white hover:text-black;
+}
+
+/* Ghost Button */
+.btn-ghost {
+  @apply bg-transparent text-white hover:bg-white/10 relative after:absolute after:bottom-0 
+         after:left-0 after:w-0 after:h-px after:bg-white after:transition-all 
+         after:duration-300 hover:after:w-full;
+}
+
+/* Gradient Button */
+.btn-gradient {
+  @apply bg-gradient-to-r from-white to-[#CCCCCC] text-black 
+         hover:from-[#CCCCCC] hover:to-white border border-transparent;
+}
+
+/* Icon Button */
+.btn-icon {
+  @apply p-3 rounded-full border border-white/20 text-white 
+         hover:border-white hover:bg-white/10;
+}
+
+/* Loading state */
+.btn-loading {
+  @apply relative text-transparent transition-none hover:text-transparent cursor-wait;
+}
+
+.btn-loading::after {
+  content: '';
+  @apply absolute inset-0 m-auto w-5 h-5 border-2 border-current border-t-transparent 
+         rounded-full animate-spin;
+}
+
+/* Disabled state */
+.btn[disabled] {
+  @apply opacity-50 cursor-not-allowed hover:scale-100 hover:shadow-none;
+}
+
+/* Link styles */
+.link {
+  @apply relative inline-block after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 after:bg-white after:transition-all after:duration-300 hover:after:w-full;
+}
+
+/* Image styles */
+.image-border {
+  @apply border border-white/20 rounded-lg transition-all duration-300 hover:border-white/40 hover:shadow-[0_0_30px_-10px_rgba(255,255,255,0.3)];
+}
+
+/* Card styles */
+.card {
+  @apply bg-black border border-white/10 rounded-lg p-6 
+         transition-all duration-300 hover:border-white/30;
+}
+
+/* Navigation styles */
+.nav-link {
+  @apply text-white/80 hover:text-white transition-colors duration-300 relative 
+         after:absolute after:bottom-0 after:left-0 after:w-0 
+         after:h-px after:bg-white after:transition-all after:duration-300 
+         hover:after:w-full;
+}
+
+/* Toast notification */
+.toast {
+  @apply fixed bottom-8 right-8 z-50 transform transition-all duration-300 opacity-0 translate-y-2;
+}
+
+.toast.show {
+  @apply opacity-100 translate-y-0;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  @apply w-2;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-black;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-white/20 rounded-full hover:bg-white/30 transition-colors;
+}
+
+/* Custom selection */
+::selection {
+  @apply bg-white/20 text-white;
+}
+
+/* Form styles */
+.form-input {
+  @apply w-full bg-transparent border border-white/20 rounded-lg px-3 py-2 sm:px-4 sm:py-3 
+         text-white placeholder-white/60 focus:border-white/60 focus:outline-none
+         transition-all duration-300 text-sm sm:text-base;
+}
+
+.form-textarea {
+  @apply w-full bg-transparent border border-white/20 rounded-lg px-3 py-2 sm:px-4 sm:py-3 
+         text-white placeholder-white/60 focus:border-white/60 focus:outline-none
+         transition-all duration-300 min-h-[100px] sm:min-h-[120px] resize-none text-sm sm:text-base;
+} 
