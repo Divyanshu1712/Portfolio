@@ -22,6 +22,7 @@ export default function Home() {
   const [showToast, setShowToast] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [toastMessage, setToastMessage] = useState({ type: 'success', message: '' });
   const nameInputRef = useRef<HTMLInputElement>(null);
   const emailInputRef = useRef<HTMLInputElement>(null);
   const messageInputRef = useRef<HTMLTextAreaElement>(null);
@@ -54,8 +55,10 @@ export default function Home() {
         body: JSON.stringify(formData),
       });
       
+      const data = await response.json();
+      
       if (!response.ok) {
-        throw new Error('Failed to submit form');
+        throw new Error(data.error || 'Failed to submit form');
       }
       
       // Reset form on success
@@ -67,11 +70,20 @@ export default function Home() {
       }
       
       // Show success message
+      setToastMessage({ 
+        type: 'success', 
+        message: 'Message sent successfully! Your message has been saved. Thank you for reaching out.' 
+      });
       setShowToast(true);
       setTimeout(() => setShowToast(false), 3000);
     } catch (error) {
       console.error('Error submitting form:', error);
-      alert('Failed to send message. Please try again later.');
+      setToastMessage({ 
+        type: 'error', 
+        message: 'Failed to send message. Please try again later.' 
+      });
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 3000);
     } finally {
       setIsSubmitting(false);
     }
@@ -459,7 +471,11 @@ export default function Home() {
                 animate={{ opacity: 1, y: 0, x: 0 }}
                 exit={{ opacity: 0, y: 10 }}
                 transition={{ duration: 0.3 }}
-                className="fixed bottom-8 right-8 z-50 bg-gradient-to-r from-green-500 to-green-600 text-white p-4 rounded-lg shadow-lg flex items-center"
+                className={`fixed bottom-8 right-8 z-50 p-4 rounded-lg shadow-lg flex items-center ${
+                  toastMessage.type === 'success' 
+                    ? 'bg-gradient-to-r from-green-500 to-green-600 text-white' 
+                    : 'bg-gradient-to-r from-red-500 to-red-600 text-white'
+                }`}
               >
                 <svg
                   className="w-6 h-6 mr-3 text-white"
@@ -468,16 +484,27 @@ export default function Home() {
                   viewBox="0 0 24 24"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M5 13l4 4L19 7"
-                  ></path>
+                  {toastMessage.type === 'success' ? (
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M5 13l4 4L19 7"
+                    ></path>
+                  ) : (
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    ></path>
+                  )}
                 </svg>
                 <div>
-                  <p className="font-medium">Message sent successfully!</p>
-                  <p className="text-white/90 text-sm mt-1">Your message has been saved. Thank you for reaching out.</p>
+                  <p className="font-medium">
+                    {toastMessage.type === 'success' ? 'Message sent successfully!' : 'Error'}
+                  </p>
+                  <p className="text-white/90 text-sm mt-1">{toastMessage.message}</p>
                 </div>
               </motion.div>
             )}
