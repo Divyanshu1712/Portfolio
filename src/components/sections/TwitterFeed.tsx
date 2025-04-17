@@ -86,7 +86,7 @@ export default function TwitterFeed() {
         }
         const data = await response.json();
         setTweets(data);
-      } catch (_) {
+      } catch {
         setError('Failed to load tweets. Please try again later.');
         // Fallback to static tweets if API fails
         setTweets([

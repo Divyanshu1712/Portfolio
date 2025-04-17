@@ -57,7 +57,7 @@ export default function About() {
               transition={{ duration: 0.5 }}
               className="text-5xl font-bold"
             >
-              Hi, I'm Divyanshu 👋
+              Hi, I&apos;m Divyanshu 👋
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -119,4 +119,4 @@ export default function About() {
       </div>
     </section>
   );
-} 
+}

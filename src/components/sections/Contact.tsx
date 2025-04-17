@@ -30,7 +30,7 @@ export default function Contact() {
       await new Promise(resolve => setTimeout(resolve, 1500));
       setSubmitStatus('success');
       setFormData({ name: '', email: '', message: '' });
-    } catch (_) {
+    } catch {
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
@@ -134,7 +134,7 @@ export default function Contact() {
                   animate={{ opacity: 1, y: 0 }}
                   className="p-4 rounded-lg bg-green-500/10 text-green-500 text-center font-medium"
                 >
-                  Message sent successfully! I'll get back to you soon. ✨
+                  Message sent successfully! I&apos;ll get back to you soon. ✨
                 </motion.div>
               )}
               {submitStatus === 'error' && (
