@@ -1,24 +1,14 @@
 # Divyanshu's Portfolio
 
-Here is a complete and polished `README.md` file written for your portfolio project, incorporating all the essential details from the GitHub repo and live portfolio:
-
----
-
-```markdown
-# 🚀 Divyanshu Srivastava's Developer Portfolio
-
-![Website](https://img.shields.io/website?url=https%3A%2F%2Fdivyanshutechie.vercel.app&style=flat-square)
-![Next.js](https://img.shields.io/badge/Next.js-15-blue?style=flat-square)
-![TailwindCSS](https://img.shields.io/badge/TailwindCSS-^3.0-38BDF8?style=flat-square)
-![TypeScript](https://img.shields.io/badge/TypeScript-%5E4.0-3178C6?style=flat-square)
+🚀 Divyanshu Srivastava's Developer Portfolio
 
 A clean, responsive, and interactive portfolio website built with **Next.js**, **TypeScript**, **Tailwind CSS**, and **Framer Motion** to showcase my projects, skills, and work experience in a professional way.
 
-🌐 **Live Demo**: [https://divyanshutechie.vercel.app](https://divyanshutechie.vercel.app)
+🌐Live Demo: [https://divyanshutechie.vercel.app](https://divyanshutechie.vercel.app)
 
 ---
 
-## ✨ Features
+✨ Features
 
 - 🌙 Light/Dark mode toggle
 - 🎨 Minimal and modern design
@@ -30,19 +20,17 @@ A clean, responsive, and interactive portfolio website built with **Next.js**, *
 
 ---
 
-## 🧰 Tech Stack
+🧰 Tech Stack
 
-- **Framework:** Next.js 15
-- **Language:** TypeScript
-- **Styling:** Tailwind CSS
-- **Animation:** Framer Motion
-- **Deployment:** Vercel
+- Framework: Next.js 15
+- Language: TypeScript
+- Styling: Tailwind CSS
+- Animation Framer Motion
+- Deployment: Vercel
 
 ---
 
-## 📁 Folder Structure
-
-```bash
+📁 Folder Structure
 .
 ├── public/                # Static files (images, icons)
 ├── src/
@@ -51,18 +39,16 @@ A clean, responsive, and interactive portfolio website built with **Next.js**, *
 │   ├── styles/            # Global and Tailwind configurations
 │   └── utils/             # Constants and helper functions
 └── README.md
-```
 
----
 
-## 🛠 Getting Started
+🛠 Getting Started
 
-### Prerequisites
+Prerequisites
 
 - Node.js v18+
 - npm or yarn
 
-### Installation
+Installation
 
 ```bash
 git clone https://github.com/Divyanshu1712/Portfolio.git
@@ -70,7 +56,7 @@ cd Portfolio
 npm install
 ```
 
-### Running the Dev Server
+Running the Dev Server
 
 ```bash
 npm run dev
@@ -80,29 +66,16 @@ Then visit `http://localhost:3000` in your browser.
 
 ---
 
-## 🛰 Deployment
+🛰 Deployment
 
-This project is deployed on **Vercel** for seamless CI/CD and fast hosting.
+This project is deployed on Vercel for seamless CI/CD and fast hosting.
 
 To deploy:
 - Push your repo to GitHub
 - Connect it to [Vercel](https://vercel.com/)
 - Done! Your site will be live with every commit
 
----
-
-## 📷 Screenshots
-
-> Replace this section with screenshots of your actual website  
-> You can use:
-```
-![Home Page](./public/preview-home.png)
-![Projects Section](./public/preview-projects.png)
-```
-
----
-
-## 🙋‍♂️ About Me
+🙋‍♂️ About Me
 
 I’m **Divyanshu Srivastava**, a passionate full-stack developer specializing in modern web technologies. I enjoy building dynamic and user-focused web applications and constantly explore new tools and frameworks.
 
@@ -113,13 +86,13 @@ I’m **Divyanshu Srivastava**, a passionate full-stack developer specializing i
 
 ---
 
-## 📃 License
+📃 License
 
 This project is open-sourced under the [MIT License](LICENSE).
 
 ---
 
-## 🌟 Show Your Support
+ Show Your Support
 
 If you like this project, don’t forget to:
 
@@ -129,5 +102,3 @@ If you like this project, don’t forget to:
 ```
 
 ---
-
-You can now **copy and paste** this into your `README.md` file directly. Let me know if you’d like me to add a preview image or update content when you add new projects!
