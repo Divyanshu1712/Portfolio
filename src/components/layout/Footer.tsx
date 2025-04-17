@@ -1,7 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
-
 export default function Footer() {
   return (
     <footer className="bg-black border-t border-white/10">

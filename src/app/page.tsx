@@ -155,7 +155,7 @@ export default function Home() {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              Hi, I'm Divyanshu 👋
+              Hi, I&apos;m Divyanshu 👋
             </motion.p>
             
             {/* Main Heading */}
@@ -175,7 +175,7 @@ export default function Home() {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.4 }}
             >
-              I'm a Full-Stack Developer and UI/UX Designer.
+              I&apos;m a Full-Stack Developer and UI/UX Designer.
               I specialize in building modern web apps and intuitive, clean user interfaces.
             </motion.p>
             
@@ -244,13 +244,13 @@ export default function Home() {
               viewport={{ once: true }}
             >
               <p className="text-base sm:text-lg leading-relaxed text-white/80">
-                Hi, I'm Divyanshu Srivastava, a passionate Full Stack Developer with a
+                Hi, I&apos;m Divyanshu Srivastava, a passionate Full Stack Developer with a
                 solid foundation in web development, blockchain, and IoT. With a
-                Bachelor of Technology degree in the Internet of Things, I've developed
+                Bachelor of Technology degree in the Internet of Things, I&apos;ve developed
                 a keen eye for crafting solutions that combine creativity and technical
                 efficiency. My expertise lies in modern frontend and backend
-                technologies like React, Python, and Node.js, and I'm always excited to
-                tackle new challenges that push the boundaries of what's possible in
+                technologies like React, Python, and Node.js, and I&apos;m always excited to
+                tackle new challenges that push the boundaries of what&apos;s possible in
                 the tech world.
               </p>
             </motion.div>
@@ -291,7 +291,7 @@ export default function Home() {
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
           >
-            Let's Connect 🚀
+            Let&apos;s Connect 🚀
           </motion.h2>
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-16">
