@@ -1,45 +1,10 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 
-const dataDir = path.join(process.cwd(), 'data');
-const contactFilePath = path.join(dataDir, 'contact-submissions.json');
-
-// Make sure the data directory exists
-const ensureDataDir = () => {
-  if (!fs.existsSync(dataDir)) {
-    fs.mkdirSync(dataDir, { recursive: true });
-  }
-  
-  if (!fs.existsSync(contactFilePath)) {
-    fs.writeFileSync(contactFilePath, JSON.stringify([]));
-  }
-};
-
-// Get all submissions (could be used for an admin panel later)
-export async function GET() {
-  try {
-    ensureDataDir();
-    
-    const data = fs.readFileSync(contactFilePath, 'utf8');
-    const submissions = JSON.parse(data);
-    
-    return NextResponse.json(submissions);
-  } catch (error) {
-    console.error('Error fetching submissions:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch submissions' },
-      { status: 500 }
-    );
-  }
-}
-
-// Save a new submission
+// For a real application, you would use a database like MongoDB, PostgreSQL, etc.
+// This is a simplified version that will work in serverless environments like Vercel
 export async function POST(request: Request) {
   try {
-    ensureDataDir();
-    
     const body = await request.json();
     const { name, email, message } = body;
     
@@ -51,7 +16,8 @@ export async function POST(request: Request) {
       );
     }
     
-    // Create submission with timestamp and ID
+    // In a real application, you would store this data in a database
+    // For now, we'll just return success since we can't write to the filesystem in Vercel
     const submission = {
       id: uuidv4(),
       name,
@@ -60,25 +26,29 @@ export async function POST(request: Request) {
       timestamp: new Date().toISOString(),
     };
     
-    // Read existing submissions
-    let submissions = [];
-    if (fs.existsSync(contactFilePath)) {
-      const data = fs.readFileSync(contactFilePath, 'utf8');
-      submissions = JSON.parse(data);
-    }
+    // Here you would typically add database code, for example:
+    // await db.collection('contacts').insertOne(submission);
     
-    // Add new submission
-    submissions.push(submission);
+    console.log('Contact form submission:', submission);
     
-    // Write back to file
-    fs.writeFileSync(contactFilePath, JSON.stringify(submissions, null, 2));
-    
-    return NextResponse.json({ success: true, id: submission.id });
+    return NextResponse.json({ 
+      success: true, 
+      id: submission.id,
+      message: 'Your message has been received. Thank you for reaching out!'
+    });
   } catch (error) {
-    console.error('Error saving submission:', error);
+    console.error('Error processing submission:', error);
     return NextResponse.json(
-      { error: 'Failed to save submission' },
+      { error: 'Failed to process your message. Please try again later.' },
       { status: 500 }
     );
   }
+}
+
+// This GET endpoint would not work in production without a database
+export async function GET() {
+  // In production, you would fetch data from a database
+  return NextResponse.json({ 
+    message: 'This endpoint requires a database connection in production.'
+  });
 } 
