@@ -21,24 +21,23 @@ const projects: Project[] = [
     description: 'A decentralized lottery system built on Ethereum blockchain ensuring transparency and fairness.',
     image: '/projects/blockwin.jpg',
     technologies: ['Solidity', 'React', 'Web3.js', 'Ethereum'],
-    github: 'https://github.com/Divyanshu1712/blockwin',
-    live: 'https://blockwin.vercel.app',
+    github: 'https://github.com/Divyanshu1712/Lottery-system-using-Blockchain'
   },
   {
     title: 'QR Code Generator',
     description: 'A web application to generate QR codes for URLs, text, and contact information.',
     image: '/projects/qr-generator.jpg',
     technologies: ['React', 'TypeScript', 'Tailwind CSS'],
-    github: 'https://github.com/Divyanshu1712/qr-generator',
-    live: 'https://qr-generator-divyanshu.vercel.app',
+    github: 'https://github.com/Divyanshu1712/qr',
+    live: 'https://qr-pied.vercel.app/',
   },
   {
     title: 'Quirkboard – Real-Time Collaborative Whiteboard',
     description: 'A collaborative whiteboard application with real-time updates and drawing tools.',
     image: '/projects/quirkboard.jpg',
     technologies: ['React', 'Socket.io', 'Canvas API', 'Node.js'],
-    github: 'https://github.com/Divyanshu1712/quirkboard',
-    live: 'https://quirkboard.vercel.app',
+    github: 'https://github.com/Divyanshu1712/Quirkboard',
+    live: 'https://quirkboard.onrender.com',
   },
 ];
 
