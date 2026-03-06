@@ -18,6 +18,9 @@ import TwitterFeed from '@/components/sections/TwitterFeed';
 // UI components
 import { Button } from "@/components/ui/Button";
 
+// Config
+import { socialLinks } from '@/config/social';
+
 export default function Home() {
   const [showToast, setShowToast] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -121,10 +124,10 @@ export default function Home() {
   if (!mounted) {
     return (
       <Layout>
-        <main className="min-h-screen bg-black pt-16">
+        <main className="min-h-screen bg-background pt-16">
           <div className="flex items-center justify-center h-screen">
             {/* Simple loading state with no animations */}
-            <div className="text-white">Loading...</div>
+            <div className="text-foreground">Loading...</div>
           </div>
         </main>
       </Layout>
@@ -134,9 +137,9 @@ export default function Home() {
   // Main component render (only on client)
   return (
     <Layout>
-      <main className="min-h-screen bg-black pt-16">
+      <main className="min-h-screen bg-background pt-16">
         {/* Hero Section */}
-        <section className="flex items-center justify-center text-center px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-black py-16 sm:py-24">
+        <section className="flex items-center justify-center text-center px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-background py-16 sm:py-24">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -145,7 +148,7 @@ export default function Home() {
           >
             {/* Avatar Container */}
             <motion.div 
-              className="w-24 h-24 sm:w-32 sm:h-32 mx-auto mb-6 rounded-full overflow-hidden border-4 border-white/10"
+              className="w-24 h-24 sm:w-32 sm:h-32 mx-auto mb-6 rounded-full overflow-hidden border-4 border-primary/10"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
@@ -162,7 +165,7 @@ export default function Home() {
             
             {/* Intro Text */}
             <motion.p 
-              className="text-lg sm:text-xl text-gray-300 mb-5"
+              className="text-lg sm:text-xl text-muted-foreground mb-5"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.2 }}
@@ -172,7 +175,7 @@ export default function Home() {
             
             {/* Main Heading */}
             <motion.h1 
-              className="text-3xl sm:text-4xl md:text-5xl font-bold mb-5 tracking-tight text-white"
+              className="text-3xl sm:text-4xl md:text-5xl font-bold mb-5 tracking-tight text-foreground"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.3 }}
@@ -182,7 +185,7 @@ export default function Home() {
             
             {/* Subheading */}
             <motion.p 
-              className="text-base sm:text-lg mb-8 text-gray-300 max-w-xl mx-auto"
+              className="text-base sm:text-lg mb-8 text-muted-foreground max-w-xl mx-auto"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.4 }}
@@ -210,9 +213,9 @@ export default function Home() {
         </section>
 
         {/* About Section */}
-        <section id="about" className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-black">
+        <section id="about" className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-background">
           <motion.h2 
-            className="text-3xl sm:text-4xl font-bold text-center mb-12 sm:mb-16 text-white"
+            className="text-3xl sm:text-4xl font-bold text-center mb-12 sm:mb-16 text-foreground"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
@@ -229,7 +232,7 @@ export default function Home() {
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
             >
-              <div className="rounded-full border-2 border-white/20 p-1 overflow-hidden w-full h-full shadow-lg">
+              <div className="rounded-full border-2 border-primary/20 p-1 overflow-hidden w-full h-full shadow-lg">
                 <Image 
                   src="/your-profile-image.jpg" // Updated path
                   alt="Divyanshu Srivastava Profile Picture"
@@ -255,7 +258,7 @@ export default function Home() {
               transition={{ duration: 0.5, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              <p className="text-base sm:text-lg leading-relaxed text-white/80">
+              <p className="text-base sm:text-lg leading-relaxed text-foreground/80">
                 Hi, I&apos;m Divyanshu Srivastava, a passionate Full Stack Developer with a
                 solid foundation in web development, blockchain, and IoT. With a
                 Bachelor of Technology degree in the Internet of Things, I&apos;ve developed
@@ -269,30 +272,30 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Skills Section */}
-        <section id="skills" className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        {/* Skills Section — id is set inside the Skills component */}
+        <div className="py-24 sm:py-32">
           <Skills />
-        </section>
+        </div>
 
-        {/* Experience Section */}
-        <section id="experience" className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        {/* Experience Section — id is set inside the Experience component */}
+        <div className="py-24 sm:py-32">
           <Experience />
-        </section>
+        </div>
 
-        {/* Education Section */}
-        <section id="education" className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        {/* Education Section — id is set inside the Education component */}
+        <div className="py-24 sm:py-32">
           <Education />
-        </section>
+        </div>
 
-        {/* Projects Section */}
-        <section id="projects" className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        {/* Projects Section — id is set inside the Projects component */}
+        <div className="py-24 sm:py-32">
           <Projects />
-        </section>
+        </div>
 
-        {/* Twitter Feed Section */}
-        <section id="twitter" className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        {/* Twitter Feed Section — id is set inside the TwitterFeed component */}
+        <div className="py-24 sm:py-32">
           <TwitterFeed />
-        </section>
+        </div>
 
         {/* Contact Section */}
         <section id="contact" className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
@@ -368,56 +371,56 @@ export default function Home() {
                 <h3 className="text-xl sm:text-2xl font-semibold mb-8">Contact Information</h3>
                 <div className="space-y-6">
                   <div className="flex items-center space-x-4 group">
-                    <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-all duration-300">
+                    <div className="contact-icon">
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
                         <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                       </svg>
                     </div>
                     <div>
-                      <p className="text-sm text-white/60">Email</p>
-                      <a href="mailto:divyanshusrivastava619@gmail.com" className="text-base sm:text-lg hover:text-white transition-colors duration-300">
+                      <p className="text-sm text-muted-foreground">Email</p>
+                      <a href="mailto:divyanshusrivastava619@gmail.com" className="text-base sm:text-lg hover:text-foreground transition-colors duration-300">
                         divyanshusrivastava619@gmail.com
                       </a>
                     </div>
                   </div>
                   
                   <div className="flex items-center space-x-4 group">
-                    <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-all duration-300">
+                    <div className="contact-icon">
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
                       </svg>
                     </div>
                     <div>
-                      <p className="text-sm text-white/60">Phone</p>
-                      <a href="tel:+919026118735" className="text-base sm:text-lg hover:text-white transition-colors duration-300">
+                      <p className="text-sm text-muted-foreground">Phone</p>
+                      <a href="tel:+919026118735" className="text-base sm:text-lg hover:text-foreground transition-colors duration-300">
                         +91 9026118735
                       </a>
                     </div>
                   </div>
                   
                   <div className="flex items-center space-x-4 group">
-                    <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-all duration-300">
+                    <div className="contact-icon">
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                       </svg>
                     </div>
                     <div>
-                      <p className="text-sm text-white/60">Location</p>
-                      <p className="text-base sm:text-lg">
+                      <p className="text-sm text-muted-foreground">Location</p>
+                      <p className="text-base sm:text-lg text-foreground">
                         Basti, Uttar Pradesh, India
                       </p>
                     </div>
                   </div>
                   
-                  <div className="pt-6 mt-6 border-t border-white/10">
-                    <p className="text-sm text-white/60 mb-4">Follow me on social media</p>
+                  <div className="pt-6 mt-6 border-t border-primary/10">
+                    <p className="text-sm text-muted-foreground mb-4">Follow me on social media</p>
                     <div className="flex space-x-4">
                       <a 
-                        href="https://github.com/Divyanshu1712" 
+                        href={socialLinks.github}
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all duration-300"
+                        className="social-icon"
                         aria-label="GitHub"
                       >
                         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -425,10 +428,10 @@ export default function Home() {
                         </svg>
                       </a>
                       <a 
-                        href="https://www.linkedin.com/in/divyanshu-srivastava-558403215" 
+                        href={socialLinks.linkedin}
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all duration-300"
+                        className="social-icon"
                         aria-label="LinkedIn"
                       >
                         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -436,10 +439,10 @@ export default function Home() {
                         </svg>
                       </a>
                       <a 
-                        href="https://x.com/Divyans19896602" 
+                        href={socialLinks.twitter}
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all duration-300"
+                        className="social-icon"
                         aria-label="Twitter/X"
                       >
                         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -447,10 +450,10 @@ export default function Home() {
                         </svg>
                       </a>
                       <a 
-                        href="https://www.instagram.com/_._divyanshu___" 
+                        href={socialLinks.instagram}
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all duration-300"
+                        className="social-icon"
                         aria-label="Instagram"
                       >
                         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -472,13 +475,11 @@ export default function Home() {
                 exit={{ opacity: 0, y: 10 }}
                 transition={{ duration: 0.3 }}
                 className={`fixed bottom-8 right-8 z-50 p-4 rounded-lg shadow-lg flex items-center ${
-                  toastMessage.type === 'success' 
-                    ? 'bg-gradient-to-r from-green-500 to-green-600 text-white' 
-                    : 'bg-gradient-to-r from-red-500 to-red-600 text-white'
+                  toastMessage.type === 'success' ? 'toast-success' : 'toast-error'
                 }`}
               >
                 <svg
-                  className="w-6 h-6 mr-3 text-white"
+                  className="w-6 h-6 mr-3 text-foreground"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -504,7 +505,7 @@ export default function Home() {
                   <p className="font-medium">
                     {toastMessage.type === 'success' ? 'Message sent successfully!' : 'Error'}
                   </p>
-                  <p className="text-white/90 text-sm mt-1">{toastMessage.message}</p>
+                  <p className="text-foreground/90 text-sm mt-1">{toastMessage.message}</p>
                 </div>
               </motion.div>
             )}

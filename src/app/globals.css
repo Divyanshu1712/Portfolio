@@ -3,59 +3,116 @@
 @tailwind utilities;
  
 @layer base {
+  /* ── Dark mode (default) ── */
   :root {
     --background: 0 0% 0%;
     --foreground: 0 0% 100%;
     --muted: 0 0% 87%;
 
-    --card: 0 0% 3%;
+    --card: 0 0% 5%;
     --card-foreground: 0 0% 100%;
- 
-    --popover: 0 0% 3%;
+
+    --popover: 0 0% 5%;
     --popover-foreground: 0 0% 100%;
- 
+
     --primary: 0 0% 100%;
     --primary-foreground: 0 0% 0%;
- 
+
     --secondary: 0 0% 10%;
     --secondary-foreground: 0 0% 90%;
- 
+
     --accent: 0 0% 100%;
     --accent-foreground: 0 0% 0%;
- 
-    --destructive: 0 0% 100%;
-    --destructive-foreground: 0 0% 0%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
 
     --border: 0 0% 20%;
     --input: 0 0% 20%;
     --ring: 0 0% 100%;
- 
+
     --radius: 0.5rem;
+
+    /* Semantic status colors */
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 100%;
+    --error: 0 72% 51%;
+    --error-foreground: 0 0% 100%;
+    --muted-foreground: 0 0% 60%;
+  }
+
+  /* ── Light mode ── */
+  .light {
+    --background: 0 0% 98%;
+    --foreground: 0 0% 8%;
+    --muted: 0 0% 40%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 8%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 8%;
+
+    --primary: 0 0% 10%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 0 0% 92%;
+    --secondary-foreground: 0 0% 15%;
+
+    --accent: 0 0% 10%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 85%;
+    --input: 0 0% 85%;
+    --ring: 0 0% 10%;
+
+    /* Semantic status colors */
+    --success: 142 71% 38%;
+    --success-foreground: 0 0% 100%;
+    --error: 0 72% 51%;
+    --error-foreground: 0 0% 100%;
+    --muted-foreground: 0 0% 45%;
   }
 }
  
 @layer base {
   * {
-    @apply border-white/20;
+    @apply border-border;
   }
   body {
-    @apply bg-black text-white antialiased;
+    @apply bg-background text-foreground antialiased;
   }
   h1, h2, h3, h4, h5, h6 {
-    @apply font-bold text-white tracking-tight;
+    @apply font-bold text-foreground tracking-tight;
   }
   p {
-    @apply text-[#E0E0E0];
+    color: hsl(var(--foreground) / 0.85);
   }
 }
 
 /* Custom gradient backgrounds */
 .gradient-text {
-  @apply bg-gradient-to-b from-white via-white/90 to-white/70 bg-clip-text text-transparent;
+  background: linear-gradient(
+    to bottom,
+    hsl(var(--foreground)),
+    hsl(var(--foreground) / 0.85),
+    hsl(var(--foreground) / 0.6)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .gradient-bg {
-  @apply bg-gradient-to-br from-white/10 via-white/5 to-transparent;
+  background: linear-gradient(
+    to bottom right,
+    hsl(var(--primary) / 0.1),
+    hsl(var(--primary) / 0.05),
+    transparent
+  );
 }
 
 .gradient-border {
@@ -93,20 +150,38 @@
 
 /* Primary Button */
 .btn-primary {
-  @apply bg-white text-black hover:bg-black hover:text-white border border-white;
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  border: 1px solid hsl(var(--primary));
+}
+.btn-primary:hover {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
 }
 
 /* Secondary Button */
 .btn-secondary {
-  @apply bg-transparent text-white border border-white 
-         hover:bg-white hover:text-black;
+  background-color: transparent;
+  color: hsl(var(--foreground));
+  border: 1px solid hsl(var(--primary));
+}
+.btn-secondary:hover {
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
 }
 
 /* Ghost Button */
 .btn-ghost {
-  @apply bg-transparent text-white hover:bg-white/10 relative after:absolute after:bottom-0 
-         after:left-0 after:w-0 after:h-px after:bg-white after:transition-all 
+  @apply bg-transparent relative after:absolute after:bottom-0 
+         after:left-0 after:w-0 after:h-px after:transition-all 
          after:duration-300 hover:after:w-full;
+  color: hsl(var(--foreground));
+}
+.btn-ghost::after {
+  background-color: hsl(var(--foreground));
+}
+.btn-ghost:hover {
+  background-color: hsl(var(--primary) / 0.1);
 }
 
 /* Gradient Button */
@@ -149,16 +224,27 @@
 
 /* Card styles */
 .card {
-  @apply bg-black border border-white/10 rounded-lg p-6 
-         transition-all duration-300 hover:border-white/30;
+  @apply rounded-lg p-6 transition-all duration-300;
+  background-color: hsl(var(--card));
+  border: 1px solid hsl(var(--primary) / 0.1);
+}
+.card:hover {
+  border-color: hsl(var(--primary) / 0.3);
 }
 
 /* Navigation styles */
 .nav-link {
-  @apply text-white/80 hover:text-white transition-colors duration-300 relative 
+  @apply transition-colors duration-300 relative 
          after:absolute after:bottom-0 after:left-0 after:w-0 
-         after:h-px after:bg-white after:transition-all after:duration-300 
+         after:h-px after:transition-all after:duration-300 
          hover:after:w-full;
+  color: hsl(var(--foreground) / 0.7);
+}
+.nav-link:hover {
+  color: hsl(var(--foreground));
+}
+.nav-link::after {
+  background-color: hsl(var(--foreground));
 }
 
 /* Toast notification */
@@ -170,33 +256,107 @@
   @apply opacity-100 translate-y-0;
 }
 
-/* Custom scrollbar */
+/* Toast variants — use these instead of hardcoded colors */
+.toast-success {
+  background: linear-gradient(
+    to right,
+    hsl(var(--success)),
+    hsl(142 71% 38%)
+  );
+  color: hsl(var(--success-foreground));
+}
+
+.toast-error {
+  background: linear-gradient(
+    to right,
+    hsl(var(--error)),
+    hsl(0 72% 42%)
+  );
+  color: hsl(var(--error-foreground));
+}
+
+/* Muted text utility */
+.text-muted {
+  color: hsl(var(--muted-foreground));
+}
+
+/* Reusable icon bubble — contact & social sections */
+.contact-icon {
+  @apply w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300;
+  background-color: hsl(var(--primary) / 0.1);
+}
+.contact-icon:hover,
+.group:hover .contact-icon {
+  background-color: hsl(var(--primary) / 0.2);
+}
+
+.social-icon {
+  @apply w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300;
+  background-color: hsl(var(--primary) / 0.1);
+}
+.social-icon:hover {
+  background-color: hsl(var(--primary) / 0.2);
+}
+
+/* ── Custom scrollbar — theme-aware ── */
 ::-webkit-scrollbar {
-  @apply w-2;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-black;
+  background: hsl(var(--background));
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-white/20 rounded-full hover:bg-white/30 transition-colors;
+  background: hsl(var(--primary) / 0.2);
+  border-radius: 999px;
 }
 
-/* Custom selection */
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary) / 0.4);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--primary) / 0.25) hsl(var(--background));
+}
+
+/* ── Custom selection — theme-aware ── */
 ::selection {
-  @apply bg-white/20 text-white;
+  background: hsl(var(--primary) / 0.2);
+  color: hsl(var(--foreground));
 }
 
-/* Form styles */
+/* Form styles — theme-aware */
 .form-input {
-  @apply w-full bg-transparent border border-white/20 rounded-lg px-3 py-2 sm:px-4 sm:py-3 
-         text-white placeholder-white/60 focus:border-white/60 focus:outline-none
-         transition-all duration-300 text-sm sm:text-base;
+  @apply w-full rounded-lg px-3 py-2 sm:px-4 sm:py-3
+         focus:outline-none transition-all duration-300 text-sm sm:text-base;
+  background: transparent;
+  border: 1px solid hsl(var(--primary) / 0.2);
+  color: hsl(var(--foreground));
+}
+.form-input::placeholder {
+  color: hsl(var(--foreground) / 0.4);
+}
+.form-input:focus {
+  border-color: hsl(var(--primary) / 0.6);
+  box-shadow: 0 0 0 2px hsl(var(--primary) / 0.1);
 }
 
 .form-textarea {
-  @apply w-full bg-transparent border border-white/20 rounded-lg px-3 py-2 sm:px-4 sm:py-3 
-         text-white placeholder-white/60 focus:border-white/60 focus:outline-none
-         transition-all duration-300 min-h-[100px] sm:min-h-[120px] resize-none text-sm sm:text-base;
-} 
+  @apply w-full rounded-lg px-3 py-2 sm:px-4 sm:py-3
+         focus:outline-none transition-all duration-300
+         min-h-[100px] sm:min-h-[120px] resize-none text-sm sm:text-base;
+  background: transparent;
+  border: 1px solid hsl(var(--primary) / 0.2);
+  color: hsl(var(--foreground));
+}
+.form-textarea::placeholder {
+  color: hsl(var(--foreground) / 0.4);
+}
+.form-textarea:focus {
+  border-color: hsl(var(--primary) / 0.6);
+  box-shadow: 0 0 0 2px hsl(var(--primary) / 0.1);
+}

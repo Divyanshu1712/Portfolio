@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { useEffect, useState } from 'react';
+import { socialLinks } from '@/config/social';
 
 interface Tweet {
   id: string;
@@ -29,7 +30,7 @@ const TweetCard = ({ tweet, index }: { tweet: Tweet; index: number }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: index * 0.2 }}
-      className="bg-card p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 backdrop-blur-sm bg-white/5"
+      className="bg-card p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 backdrop-blur-sm"
     >
       <div className="flex items-start space-x-4">
         <div className="flex-shrink-0">
@@ -141,7 +142,7 @@ export default function TwitterFeed() {
   }, [inView]);
 
   return (
-    <section id="twitter" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <section id="twitter" className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       <motion.div
         ref={ref}
         initial={{ opacity: 0, y: 20 }}
@@ -160,7 +161,7 @@ export default function TwitterFeed() {
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
         </div>
       ) : error ? (
-        <div className="text-center text-red-500">{error}</div>
+        <div className="text-center text-destructive">{error}</div>
       ) : (
         <div className="max-w-2xl mx-auto space-y-6">
           {tweets.map((tweet, index) => (
@@ -171,7 +172,7 @@ export default function TwitterFeed() {
 
       <div className="mt-8 text-center">
         <a
-          href="https://x.com/Divyans19896602"
+          href={socialLinks.twitter}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center text-primary hover:text-primary/80 transition-colors"
