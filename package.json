@@ -15,7 +15,7 @@
     "date-fns": "^4.1.0",
     "framer-motion": "^11.18.2",
     "lucide-react": "^0.487.0",
-    "next": "15.3.0",
+    "next": "^15.5.12",
     "react": "^18",
     "react-dom": "^18",
     "react-intersection-observer": "^9.16.0",
