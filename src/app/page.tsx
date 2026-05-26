@@ -1,21 +1,8 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
-import Link from 'next/link';
-import {
-  Mail,
-  Phone,
-  MapPin,
-  Github,
-  Linkedin,
-  Twitter,
-  Instagram,
-  Rocket,
-  Check,
-  X
-} from 'lucide-react';
 
 // Layout components
 import Layout from '@/components/layout/Layout';
@@ -27,12 +14,6 @@ import Education from '@/components/sections/Education';
 import Projects from '@/components/sections/Projects';
 import TwitterFeed from '@/components/sections/TwitterFeed';
 import Contact from '@/components/sections/Contact';
-
-// UI components
-import { Button } from "@/components/ui/Button";
-
-// Config
-import { socialLinks } from '@/config/social';
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -188,7 +169,7 @@ export default function Home() {
                   width={320}
                   height={320}
                   className="rounded-full object-cover w-full h-full"
-                  onError={(e) => {
+                  onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
                     // Use a consistent fallback image to prevent hydration mismatch
                     const target = e.currentTarget;
                     if (mounted) {
