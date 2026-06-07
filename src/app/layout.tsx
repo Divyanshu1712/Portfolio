@@ -70,7 +70,7 @@ export default function RootLayout({
           disableTransitionOnChange={false}
         >
           {children}
-          <Analytics />
+          {/* <Analytics /> - Uncomment this after enabling Web Analytics in your Vercel Dashboard */}
         </ThemeProvider>
       </body>
     </html>

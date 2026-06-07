@@ -18,7 +18,8 @@ const nextConfig = {
   },
   experimental: {
     // Remove deprecated turbo config
-  }
+  },
+  turbopack: {},
 }
 
 module.exports = nextConfig

@@ -13,10 +13,15 @@ export interface GitHubRepo {
 }
 
 export async function fetchGitHubProjects(username: string): Promise<GitHubRepo[]> {
+  console.log('Fetching GitHub repos for username:', username);
+  const url = `https://api.github.com/users/${username}/repos?sort=updated&per_page=100`;
+  console.log('Request URL:', url);
   try {
-    const response = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=100`);
-    if (!response.ok) throw new Error('Failed to fetch GitHub repos');
-    
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error('Failed to fetch GitHub repos');
+    }
+
     const repos: GitHubRepo[] = await response.json();
     return repos
       .filter(repo => !repo.fork) // Filter out forked repositories
@@ -25,4 +30,4 @@ export async function fetchGitHubProjects(username: string): Promise<GitHubRepo[
     console.error('Error fetching GitHub projects:', error);
     return [];
   }
-} 
+}

@@ -5,24 +5,24 @@ import { useInView } from 'react-intersection-observer';
 
 const skills = [
   {
-    category: 'Programming',
-    items: ['Python (Flask, FastAPI, Scripting, Automation)', 'JavaScript (ES6)', 'TypeScript', 'Solidity']
+    category: 'Languages',
+    items: ['JavaScript', 'TypeScript', 'Python (Flask, FastAPI, Scripting, Automation)', 'SQL', 'Solidity']
   },
   {
     category: 'Frontend',
-    items: ['HTML5', 'CSS3', 'Tailwind CSS', 'React.js', 'jQuery', 'Figma (Wireframing, Prototyping, UX Research)']
+    items: ['React.js', 'Next.js', 'HTML5', 'CSS3', 'Tailwind CSS', 'jQuery', 'Figma (Wireframing, Prototyping, UX Research)']
   },
   {
     category: 'Backend',
-    items: ['Node.js', 'Express.js', 'EJS', 'REST APIs', 'FastAPIs', 'MySQL', 'PostgreSQL', 'MongoDB']
+    items: ['Node.js', 'Express.js', 'FastAPI', 'REST APIs', 'WebSockets', 'EJS', 'MySQL', 'PostgreSQL', 'MongoDB', 'NoSQL']
   },
   {
-    category: 'DevOps & Deployment',
-    items: ['AWS (EC2, S3)', 'Docker', 'SSL Configuration']
+    category: 'Cloud & DevOps',
+    items: ['Azure Functions', 'AWS (EC2, S3)', 'Docker', 'CI/CD Pipelines', 'SSL Configuration']
   },
   {
-    category: 'Tools & Technologies',
-    items: ['Git', 'GitHub', 'VS Code', 'Postman', 'Power BI', 'Docker', 'Figma', 'Adobe XD']
+    category: 'Tools',
+    items: ['Git', 'GitHub', 'Figma', 'Power BI', 'VS Code', 'Postman', 'Adobe XD']
   }
 ];
 

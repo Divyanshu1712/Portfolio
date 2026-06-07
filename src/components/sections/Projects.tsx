@@ -69,7 +69,6 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background/70 to-transparent" />
       </div>
-      
       <div className="flex flex-col flex-grow p-6">
         <h3 className="text-lg sm:text-xl font-semibold text-foreground mb-3">{project.title}</h3>
         <div className="flex flex-wrap gap-2 mb-4">
@@ -83,7 +82,7 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
           ))}
         </div>
         <p className="text-sm sm:text-base text-foreground/80 mb-6 flex-grow">{project.description}</p>
-        
+
         <div className="flex gap-4 mt-auto">
           <a
             href={project.github}
@@ -91,7 +90,7 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
             rel="noopener noreferrer"
             aria-label={`View code for ${project.title} on Github`}
           >
-            <Button variant="secondary" size="sm" className="w-full sm:w-auto"> 
+            <Button variant="secondary" size="sm" className="w-full sm:w-auto">
               <Github className="w-4 h-4 mr-2" />
               View Code
             </Button>
@@ -103,7 +102,7 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
               rel="noopener noreferrer"
               aria-label={`View live demo for ${project.title}`}
             >
-              <Button variant="secondary" size="sm" className="w-full sm:w-auto"> 
+              <Button variant="secondary" size="sm" className="w-full sm:w-auto">
                 <ExternalLink className="w-4 h-4 mr-2" />
                 Live Demo
               </Button>
@@ -137,10 +136,21 @@ export default function Projects() {
       </motion.div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {projects.map((project, index) => (
-          <ProjectCard key={project.title} project={project} index={index} />
-        ))}
+        {projects?.map((project, index) => {
+          // If it is the 3rd project in a 3-project list, center it on medium screens
+          const isLastOdd = projects.length === 3 && index === 2;
+          return (
+            <div 
+              key={project.title}
+              className={`flex w-full ${isLastOdd ? 'md:col-span-2 lg:col-span-1 justify-center' : ''}`}
+            >
+              <div className={`w-full ${isLastOdd ? 'md:w-[calc(50%-1rem)] lg:w-full' : ''}`}>
+                <ProjectCard project={project} index={index} />
+              </div>
+            </div>
+          );
+        })}
       </div>
     </section>
   );
-} 
+}

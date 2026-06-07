@@ -16,6 +16,23 @@ interface ExperienceItem {
 
 const experiences: ExperienceItem[] = [
   {
+    role: 'Associate Software Engineer (Full Stack)',
+    company: 'BOT Mantra',
+    period: 'Apr 2025 - Present',
+    location: 'Bengaluru, India',
+    achievements: [
+      'Built and deployed Azure Functions powering backend workflows and enterprise automation systems.',
+      'Developed Python-based PDF extraction pipelines converting complex documents into structured JSON while preserving layout fidelity.',
+      'Designed and implemented an automated PDF-to-Excel conversion engine, reducing manual processing effort significantly.',
+      'Implemented JWT authentication, refresh-token flows, RBAC, and secure session management.',
+      'Built real-time dashboards and scalable backend services using FastAPI, PostgreSQL, React.js, and WebSockets.',
+      'Developed full-stack enterprise applications using React.js, Tailwind CSS, FastAPI, and PostgreSQL.',
+      'Managed CI/CD pipelines and Azure deployments for reliable production releases.',
+      'Collaborated with cross-functional teams in Agile environments to improve system scalability and performance.'
+    ],
+    skills: ['Azure Functions', 'Python', 'FastAPI', 'React.js', 'PostgreSQL', 'CI/CD', 'WebSockets']
+  },
+  {
     role: 'UI/UX DESIGNING Intern',
     company: 'GloriaVita CraftTech Solutions',
     period: 'July 2024 - October 2024',
