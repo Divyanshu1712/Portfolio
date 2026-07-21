@@ -1,57 +1,40 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { Analytics } from '@vercel/analytics/react';
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import { siteConfig } from "@/config/site";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'
-  ),
-  title: "Divyanshu Srivastava | Full Stack Developer & UI/UX Designer",
-  description:
-    "Portfolio of Divyanshu Srivastava — Full Stack Developer and UI/UX Designer specializing in React, Next.js, Node.js, Python, and Blockchain. Building modern, functional, and beautiful web applications.",
-  keywords: [
-    "Divyanshu Srivastava",
-    "Full Stack Developer",
-    "UI/UX Designer",
-    "React Developer",
-    "Next.js",
-    "Node.js",
-    "Python",
-    "Blockchain",
-    "IoT",
-    "Portfolio",
-    "Web Developer India",
-  ],
-  authors: [{ name: "Divyanshu Srivastava", url: "https://github.com/Divyanshu1712" }],
-  creator: "Divyanshu Srivastava",
+  metadataBase: new URL(siteConfig.url),
+  title: siteConfig.title,
+  description: siteConfig.description,
+  keywords: siteConfig.keywords,
+  authors: [{ name: siteConfig.author.name, url: siteConfig.author.github }],
+  creator: siteConfig.author.name,
   robots: { index: true, follow: true },
   openGraph: {
     type: "website",
     locale: "en_IN",
-    title: "Divyanshu Srivastava | Full Stack Developer & UI/UX Designer",
-    description:
-      "Explore projects, skills, and experience of Divyanshu Srivastava — Full Stack Developer & UI/UX Designer.",
-    siteName: "Divyanshu Srivastava Portfolio",
+    title: siteConfig.title,
+    description: siteConfig.description,
+    siteName: `${siteConfig.name} Portfolio`,
     images: [
       {
-        url: "/Profile-avtar.jpg",
+        url: siteConfig.ogImage,
         width: 128,
         height: 128,
-        alt: "Divyanshu Srivastava",
+        alt: siteConfig.name,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Divyanshu Srivastava | Full Stack Developer",
-    description:
-      "Full Stack Developer & UI/UX Designer — React, Next.js, Python, Blockchain.",
-    creator: "@Divyans19896602",
-    images: ["/Profile-avtar.jpg"],
+    title: siteConfig.title,
+    description: siteConfig.description,
+    creator: siteConfig.author.twitter,
+    images: [siteConfig.ogImage],
   },
 };
 
@@ -70,7 +53,6 @@ export default function RootLayout({
           disableTransitionOnChange={false}
         >
           {children}
-          {/* <Analytics /> - Uncomment this after enabling Web Analytics in your Vercel Dashboard */}
         </ThemeProvider>
       </body>
     </html>

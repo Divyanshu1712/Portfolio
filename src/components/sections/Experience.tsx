@@ -2,134 +2,100 @@
 
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import { MapPin, Calendar, Briefcase } from 'lucide-react';
+import SectionWrapper from '@/components/shared/SectionWrapper';
+import { experiences } from '@/data/experience';
 
-// Define the ExperienceItem interface
-interface ExperienceItem {
-  role: string;
-  company: string;
-  period: string;
-  location: string;
-  description?: string;
-  achievements: string[];
-  skills: string[];
-}
-
-const experiences: ExperienceItem[] = [
-  {
-    role: 'Associate Software Engineer (Full Stack)',
-    company: 'BOT Mantra',
-    period: 'Apr 2025 - Present',
-    location: 'Bengaluru, India',
-    achievements: [
-      'Built and deployed Azure Functions powering backend workflows and enterprise automation systems.',
-      'Developed Python-based PDF extraction pipelines converting complex documents into structured JSON while preserving layout fidelity.',
-      'Designed and implemented an automated PDF-to-Excel conversion engine, reducing manual processing effort significantly.',
-      'Implemented JWT authentication, refresh-token flows, RBAC, and secure session management.',
-      'Built real-time dashboards and scalable backend services using FastAPI, PostgreSQL, React.js, and WebSockets.',
-      'Developed full-stack enterprise applications using React.js, Tailwind CSS, FastAPI, and PostgreSQL.',
-      'Managed CI/CD pipelines and Azure deployments for reliable production releases.',
-      'Collaborated with cross-functional teams in Agile environments to improve system scalability and performance.'
-    ],
-    skills: ['Azure Functions', 'Python', 'FastAPI', 'React.js', 'PostgreSQL', 'CI/CD', 'WebSockets']
-  },
-  {
-    role: 'UI/UX DESIGNING Intern',
-    company: 'GloriaVita CraftTech Solutions',
-    period: 'July 2024 - October 2024',
-    location: 'Remote',
-    achievements: [
-      'Redesigned the ViDesh Tour website, improving user flow efficiency by 30-35% through better navigation and information architecture',
-      'Utilized Figma for wireframing, prototyping, and UI enhancements, ensuring a seamless user experience',
-      'Conducted UX research to align design decisions with user needs and preferences',
-      'Developed visually engaging assets to maintain brand consistency and enhance user interaction',
-      'Leveraged analytics to refine designs, optimizing user engagement and usability'
-    ],
-    skills: ['Figma', 'Adobe XD', 'UX Research', 'Information Architecture', 'Wireframing', 'Prototyping', 'Visual Communication']
-  },
-  {
-    role: 'Design Engineer Intern',
-    company: 'Schneider Electric',
-    period: 'July 2023 - August 2023',
-    location: 'Remote',
-    achievements: [
-      'Conducted R&D in IoT automation to enhance VRV AC system efficiency and performance',
-      'Developed robust Python scripts for real-time IoT data ingestion, transformation, and automation workflows',
-      'Used Python to interface with device communication protocols and streamline data exchange pipelines',
-      'Engineered a system integration device that improved two-way communication and reduced energy consumption by 15%',
-      'Applied data analysis and protocol optimization techniques to boost automation efficiency',
-      'Collaborated with cross-functional teams to innovate and deploy high-impact automation solutions'
-    ],
-    skills: ['Python', 'IoT', 'Automation', 'Research', 'Scripting', 'Data Analysis']
-  }
-];
-
-const ExperienceCard = ({ experience, index }: { experience: typeof experiences[0], index: number }) => {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
+const ExperienceCard = ({ experience, index }: { experience: typeof experiences[0]; index: number }) => {
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
+  const isLast = index === experiences.length - 1;
 
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-      animate={inView ? { opacity: 1, x: 0 } : {}}
-      transition={{ duration: 0.5, delay: index * 0.2 }}
-      className={`relative pl-8 pb-8 ${index !== experiences.length - 1 ? 'border-l-2 border-primary/20' : ''}`}
-    >
-      <div className="absolute left-[-9px] top-0 w-4 h-4 rounded-full bg-primary" />
-      <div className="bg-card p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4">
-          <h3 className="text-xl font-semibold text-primary">{experience.role}</h3>
-          <span className="text-sm text-muted-foreground">{experience.period}</span>
-        </div>
-        <h4 className="text-lg font-medium mb-2">{experience.company}</h4>
-        <p className="text-muted-foreground mb-4">{experience.description}</p>
-        <ul className="space-y-2">
-          {experience.achievements.map((achievement, i) => (
-            <motion.li
-              key={i}
-              initial={{ opacity: 0, x: -20 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.3, delay: index * 0.2 + i * 0.1 }}
-              className="flex items-start"
-            >
-              <span className="text-primary mr-2">•</span>
-              {achievement}
-            </motion.li>
-          ))}
-        </ul>
+    <div ref={ref} className="relative flex gap-6">
+      {/* Timeline line + dot */}
+      <div className="flex flex-col items-center">
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={inView ? { scale: 1 } : {}}
+          transition={{ duration: 0.3, delay: index * 0.15 }}
+          className="w-10 h-10 rounded-full bg-primary/15 border-2 border-primary/40 flex items-center justify-center flex-shrink-0 z-10"
+        >
+          <Briefcase className="w-4 h-4 text-primary" />
+        </motion.div>
+        {!isLast && <div className="w-px flex-1 bg-border/60 mt-3" />}
       </div>
-    </motion.div>
+
+      {/* Card */}
+      <motion.div
+        initial={{ opacity: 0, x: 30 }}
+        animate={inView ? { opacity: 1, x: 0 } : {}}
+        transition={{ duration: 0.5, delay: index * 0.15 }}
+        className={`flex-1 ${isLast ? 'pb-0' : 'pb-10'}`}
+      >
+        <div className="bg-card border border-border/60 rounded-2xl p-6 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300">
+          {/* Header */}
+          <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2 mb-4">
+            <div>
+              <h3 className="text-lg font-bold text-primary leading-tight">{experience.role}</h3>
+              <p className="text-base font-semibold text-foreground/90 mt-0.5">{experience.company}</p>
+            </div>
+            <div className="flex flex-col gap-1 sm:items-end flex-shrink-0">
+              <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground bg-muted/40 px-2.5 py-1 rounded-full">
+                <Calendar className="w-3 h-3" />
+                {experience.period}
+              </span>
+              <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
+                <MapPin className="w-3 h-3" />
+                {experience.location}
+              </span>
+            </div>
+          </div>
+
+          {/* Achievements */}
+          <ul className="space-y-2 mb-5">
+            {experience.achievements.map((item, i) => (
+              <motion.li
+                key={i}
+                initial={{ opacity: 0, x: -12 }}
+                animate={inView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.3, delay: index * 0.15 + i * 0.06 }}
+                className="flex items-start gap-2.5 text-sm text-foreground/75 leading-relaxed"
+              >
+                <span className="text-primary mt-1.5 flex-shrink-0">▸</span>
+                {item}
+              </motion.li>
+            ))}
+          </ul>
+
+          {/* Skills */}
+          <div className="flex flex-wrap gap-2">
+            {experience.skills.map((skill) => (
+              <span
+                key={skill}
+                className="px-2.5 py-0.5 text-xs font-medium rounded-md bg-primary/10 text-primary border border-primary/15"
+              >
+                {skill}
+              </span>
+            ))}
+          </div>
+        </div>
+      </motion.div>
+    </div>
   );
 };
 
 export default function Experience() {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
-
   return (
-    <section id="experience" className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      <motion.div
-        ref={ref}
-        initial={{ opacity: 0, y: 20 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.5 }}
-        className="text-center mb-16"
-      >
-        <h2 className="section-title">Professional Experience</h2>
-        <p className="text-muted-foreground max-w-2xl mx-auto">
-          A journey through my professional growth and achievements
-        </p>
-      </motion.div>
-
+    <SectionWrapper
+      id="experience"
+      title="Professional Experience"
+      subtitle="A journey through my professional growth and achievements"
+    >
       <div className="max-w-3xl mx-auto">
         {experiences.map((experience, index) => (
           <ExperienceCard key={experience.company} experience={experience} index={index} />
         ))}
       </div>
-    </section>
+    </SectionWrapper>
   );
-} 
+}

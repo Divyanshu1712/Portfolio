@@ -3,96 +3,79 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Github, ExternalLink } from 'lucide-react';
-import { Button } from '@/components/ui/Button';
 import Image from 'next/image';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import SectionWrapper from '@/components/shared/SectionWrapper';
+import { projects } from '@/data/projects';
+import { socialLinks } from '@/data/social';
 
-interface Project {
-  title: string;
-  description: string;
-  image: string;
-  technologies: string[];
-  github: string;
-  live?: string;
-}
-
-const projects: Project[] = [
-  {
-    title: 'BlockWin: Transparent Lottery on Ethereum',
-    description: 'A decentralized lottery system built on Ethereum blockchain ensuring transparency and fairness.',
-    image: '/projects/blockwin.jpg',
-    technologies: ['Solidity', 'React', 'Web3.js', 'Ethereum'],
-    github: 'https://github.com/Divyanshu1712/Lottery-system-using-Blockchain'
-  },
-  {
-    title: 'QR Code Generator',
-    description: 'A web application to generate QR codes for URLs, text, and contact information.',
-    image: '/projects/qr-generator.jpg',
-    technologies: ['React', 'TypeScript', 'Tailwind CSS'],
-    github: 'https://github.com/Divyanshu1712/qr',
-    live: 'https://qr-pied.vercel.app/',
-  },
-  {
-    title: 'Quirkboard – Real-Time Collaborative Whiteboard',
-    description: 'A collaborative whiteboard application with real-time updates and drawing tools.',
-    image: '/projects/quirkboard.jpg',
-    technologies: ['React', 'Socket.io', 'Canvas API', 'Node.js'],
-    github: 'https://github.com/Divyanshu1712/Quirkboard',
-    live: 'https://quirkboard.onrender.com',
-  },
-];
-
-const ProjectCard = ({ project, index }: { project: Project; index: number }) => {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
+const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: number }) => {
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 40 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="group relative flex flex-col h-full overflow-hidden rounded-2xl bg-card border border-primary/10 shadow-md hover:shadow-lg hover:border-primary/30 transition-all duration-300"
+      className="group flex flex-col h-full overflow-hidden rounded-2xl bg-card border border-border/60
+                 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300"
     >
+      {/* Image */}
       <div className="relative aspect-video overflow-hidden">
         <Image
           src={project.image}
           alt={project.title}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
-          style={{ objectFit: "cover" }}
-          className="transition-transform duration-500 group-hover:scale-110"
+          style={{ objectFit: 'cover' }}
+          className="transition-transform duration-500 group-hover:scale-105"
           placeholder="blur"
           blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-          onError={(e) => (e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjE4MCIgdmlld0JveD0iMCAwIDMyMCAxODAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iIzIyMjIiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTYiIGZpbGw9IiM4ODgiPkltYWdlIE5vdCBGb3VuZDwvdGV4dD48L3N2Zz4=')}
+          onError={(e) =>
+          (e.currentTarget.src =
+            'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjE4MCIgdmlld0JveD0iMCAwIDMyMCAxODAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iIzBkMTExYiIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNiIgZmlsbD0iIzYzYjNlZCI+SW1hZ2UgTm90IEZvdW5kPC90ZXh0Pjwvc3ZnPg==')
+          }
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-background/70 to-transparent" />
+        {/* Gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-card/90 via-card/20 to-transparent" />
       </div>
-      <div className="flex flex-col flex-grow p-6">
-        <h3 className="text-lg sm:text-xl font-semibold text-foreground mb-3">{project.title}</h3>
-        <div className="flex flex-wrap gap-2 mb-4">
+
+      {/* Content */}
+      <div className="flex flex-col flex-grow p-5">
+        <h3 className="text-base font-bold text-foreground mb-2 group-hover:text-primary transition-colors duration-200">
+          {project.title}
+        </h3>
+
+        {/* Tech badges */}
+        <div className="flex flex-wrap gap-1.5 mb-3">
           {project.technologies.map((tech) => (
             <span
               key={tech}
-              className="px-3 py-1 text-xs font-medium rounded-full bg-primary/10 text-foreground/80 backdrop-blur-sm"
+              className="px-2 py-0.5 text-xs font-medium rounded-md bg-primary/10 text-primary border border-primary/15"
             >
               {tech}
             </span>
           ))}
         </div>
-        <p className="text-sm sm:text-base text-foreground/80 mb-6 flex-grow">{project.description}</p>
 
-        <div className="flex gap-4 mt-auto">
+        <p className="text-sm text-foreground/70 leading-relaxed flex-grow mb-5">
+          {project.description}
+        </p>
+
+        {/* Action buttons */}
+        <div className="flex gap-3 mt-auto">
           <a
             href={project.github}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={`View code for ${project.title} on Github`}
+            aria-label={`GitHub — ${project.title}`}
+            className="flex-1"
           >
-            <Button variant="secondary" size="sm" className="w-full sm:w-auto">
-              <Github className="w-4 h-4 mr-2" />
-              View Code
+            <Button variant="outline" size="sm" className="w-full gap-1.5">
+              <Github className="w-3.5 h-3.5" />
+              Code
             </Button>
           </a>
           {project.live && (
@@ -100,10 +83,11 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
               href={project.live}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={`View live demo for ${project.title}`}
+              aria-label={`Live demo — ${project.title}`}
+              className="flex-1"
             >
-              <Button variant="secondary" size="sm" className="w-full sm:w-auto">
-                <ExternalLink className="w-4 h-4 mr-2" />
+              <Button size="sm" className="w-full gap-1.5">
+                <ExternalLink className="w-3.5 h-3.5" />
                 Live Demo
               </Button>
             </a>
@@ -115,42 +99,41 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
 };
 
 export default function Projects() {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
-
   return (
-    <section id="projects" className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      <motion.div
-        ref={ref}
-        initial={{ opacity: 0, y: 20 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.5 }}
-        className="text-center mb-12 sm:mb-16"
-      >
-        <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">Featured Projects</h2>
-        <p className="text-foreground/80 max-w-2xl mx-auto">
-          Here are some of my recent projects that showcase my skills and expertise.
-        </p>
-      </motion.div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {projects?.map((project, index) => {
-          // If it is the 3rd project in a 3-project list, center it on medium screens
-          const isLastOdd = projects.length === 3 && index === 2;
+    <SectionWrapper
+      id="projects"
+      title="Featured Projects"
+      subtitle="A selection of my recent work showcasing my skills and expertise"
+    >
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {projects.map((project, index) => {
+          const isLastOdd = projects.length % 3 === 1 && index === projects.length - 1;
           return (
-            <div 
+            <div
               key={project.title}
-              className={`flex w-full ${isLastOdd ? 'md:col-span-2 lg:col-span-1 justify-center' : ''}`}
+              className={`flex ${isLastOdd ? 'md:col-span-2 lg:col-span-1' : ''}`}
             >
-              <div className={`w-full ${isLastOdd ? 'md:w-[calc(50%-1rem)] lg:w-full' : ''}`}>
+              <div className={`w-full ${isLastOdd ? 'md:max-w-sm md:mx-auto lg:max-w-none' : ''}`}>
                 <ProjectCard project={project} index={index} />
               </div>
             </div>
           );
         })}
       </div>
-    </section>
+
+      {/* View all on GitHub */}
+      <div className="mt-10 text-center">
+        <a
+          href={socialLinks.github}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Button variant="outline" className="gap-2">
+            <Github className="w-4 h-4" />
+            View All Projects on GitHub
+          </Button>
+        </a>
+      </div>
+    </SectionWrapper>
   );
 }

@@ -1,47 +1,53 @@
-import { ReactNode } from 'react';
-import { motion } from 'framer-motion';
+import * as React from "react"
+import { cva, type VariantProps } from "class-variance-authority"
+import { cn } from "@/lib/utils"
 
-interface ButtonProps {
-  variant?: 'primary' | 'secondary' | 'ghost' | 'gradient' | 'icon';
-  size?: 'sm' | 'md' | 'lg';
-  isLoading?: boolean;
-  icon?: ReactNode;
-  children: ReactNode;
-  className?: string;
-  disabled?: boolean;
-  onClick?: () => void;
-  type?: 'button' | 'submit' | 'reset';
-}
+const buttonVariants = cva(
+  "inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-lg text-sm font-medium transition-all duration-200 disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+  {
+    variants: {
+      variant: {
+        default:
+          "bg-primary text-primary-foreground hover:bg-primary/85 shadow-sm",
+        outline:
+          "border border-border bg-transparent text-foreground hover:bg-muted/60 hover:border-primary/40",
+        secondary:
+          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        ghost:
+          "text-foreground hover:bg-muted/60 hover:text-foreground",
+        destructive:
+          "bg-destructive/10 text-destructive hover:bg-destructive/20 border border-destructive/30",
+        link: "text-primary underline-offset-4 hover:underline",
+      },
+      size: {
+        default: "h-9 px-4 py-2",
+        sm: "h-8 px-3 text-xs",
+        lg: "h-11 px-6 text-base",
+        icon: "h-9 w-9",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+    },
+  }
+)
 
-export const Button = ({
-  variant = 'primary',
-  size = 'md',
-  isLoading = false,
-  icon,
-  children,
-  className = '',
-  disabled,
-  onClick,
-  type = 'button',
-}: ButtonProps) => {
-  const baseClass = 'btn';
-  const variantClass = `btn-${variant}`;
-  const sizeClass = size === 'md' ? 'btn-md' : `btn-${size}`;
-  const loadingClass = isLoading ? 'btn-loading' : '';
-  
-  return (
-    <motion.button
-      whileHover={{ scale: disabled || isLoading ? 1 : 1.02 }}
-      whileTap={{ scale: disabled || isLoading ? 1 : 0.98 }}
-      className={`${baseClass} ${variantClass} ${sizeClass} ${loadingClass} ${className}`}
-      disabled={disabled || isLoading}
-      onClick={onClick}
-      type={type}
-    >
-      {icon && !isLoading && (
-        <span className="mr-2">{icon}</span>
-      )}
-      {children}
-    </motion.button>
-  );
-}; 
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {}
+
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant, size, ...props }, ref) => {
+    return (
+      <button
+        className={cn(buttonVariants({ variant, size, className }))}
+        ref={ref}
+        {...props}
+      />
+    )
+  }
+)
+Button.displayName = "Button"
+
+export { Button, buttonVariants }
