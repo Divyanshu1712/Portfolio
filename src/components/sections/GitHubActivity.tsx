@@ -3,8 +3,8 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { Star, GitFork, ExternalLink, Github } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Star, ExternalLink, Github } from 'lucide-react';
+import { Button } from '@/components/ui/Button';
 import SectionWrapper from '@/components/shared/SectionWrapper';
 import { fetchGitHubProjects, type GitHubRepo } from '@/lib/github';
 import { githubUsername, socialLinks } from '@/data/social';

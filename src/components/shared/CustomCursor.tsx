@@ -24,7 +24,6 @@ const TRAIL_LAG_BASE = 0.35; // how quickly dot[0] catches the head
 const TRAIL_LAG_DECAY = 0.965; // each subsequent dot lags a little more
 
 export default function CustomCursor() {
-  const [isHovered, setIsHovered] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
   const headRef = useRef<HTMLDivElement>(null);
@@ -61,7 +60,6 @@ export default function CustomCursor() {
       );
       if (hovering !== isHoveredRef.current) {
         isHoveredRef.current = hovering;
-        setIsHovered(hovering);
       }
     };
 

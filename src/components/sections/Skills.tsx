@@ -51,7 +51,7 @@ export default function Skills() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-xs sm:text-sm font-mono tracking-widest text-muted-foreground max-w-xs md:text-right"
           >
-            // SYSTEMS, LANGUAGES, AND TOOLS I USE TO BRING IDEAS TO REALITY.
+            {/* SYSTEMS, LANGUAGES, AND TOOLS I USE TO BRING IDEAS TO REALITY. */}
           </motion.div>
         </div>
 

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowRight, Star, Sparkles } from 'lucide-react';
@@ -15,7 +15,7 @@ const getGreeting = () => {
 
 export default function Hero() {
   const [isAsleep, setIsAsleep] = useState(false);
-  const [sleepCount, setSleepCount] = useState(0);
+  const sleepCountRef = useRef(0);
   const [messageIndex, setMessageIndex] = useState(0);
 
   const messages = [
@@ -34,14 +34,11 @@ export default function Hero() {
   }, [messages.length]);
 
   const handlePillClick = () => {
-    setSleepCount((prev) => {
-      const next = prev + 1;
-      if (next >= 2) {
-        setIsAsleep(!isAsleep);
-        return 0;
-      }
-      return next;
-    });
+    sleepCountRef.current += 1;
+    if (sleepCountRef.current >= 2) {
+      setIsAsleep(!isAsleep);
+      sleepCountRef.current = 0;
+    }
     // Manually advance to next message on click
     setMessageIndex((prev) => (prev + 1) % messages.length);
   };

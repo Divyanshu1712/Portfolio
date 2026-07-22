@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Clock, ArrowRight, Rss } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/Button';
 import SectionWrapper from '@/components/shared/SectionWrapper';
 import { blogPosts } from '@/data/content';
 

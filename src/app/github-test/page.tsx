@@ -18,8 +18,8 @@ export default function GitHubTestPage() {
       try {
         const data = await fetchGitHubProjects(username);
         setRepos(data);
-      } catch (e: any) {
-        setError(e.message ?? "Unexpected error");
+      } catch (e: unknown) {
+        setError((e as Error).message ?? "Unexpected error");
       } finally {
         setLoading(false);
       }
