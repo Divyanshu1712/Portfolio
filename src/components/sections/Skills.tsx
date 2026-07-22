@@ -15,11 +15,8 @@ const categoryDisplayNames: Record<string, string> = {
 };
 
 export default function Skills() {
-  const [activeTab, setActiveTab] = useState(skills[1].category); // Default to Frontend or Backend
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
-
-  const activeSkills = skills.find((s) => s.category === activeTab)?.items ?? [];
-  const displayName = categoryDisplayNames[activeTab] || activeTab.toUpperCase();
 
   return (
     <section
@@ -58,36 +55,97 @@ export default function Skills() {
           </motion.div>
         </div>
 
-        {/* ── MAIN LAYOUT GRID ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-          
-          {/* Left Column: Vertical capsule tabs */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.15 }}
-            className="lg:col-span-5 xl:col-span-4 flex flex-row lg:flex-row gap-3 overflow-x-auto lg:overflow-x-visible pb-4 lg:pb-0 scrollbar-none"
-          >
-            <div className="flex lg:flex-row gap-3 w-full justify-between min-w-[320px] lg:min-w-0 h-[380px] lg:h-[480px]">
-              {skills.map((s) => {
-                const label = categoryDisplayNames[s.category] || s.category.toUpperCase();
-                const isActive = activeTab === s.category;
+        {/* ── DESKTOP INTERACTIVE ACCORDION GRID (lg and up) ── */}
+        <div className="hidden lg:flex flex-row gap-4 h-[520px] items-stretch w-full">
+          {skills.map((categoryData, index) => {
+            const label = categoryDisplayNames[categoryData.category] || categoryData.category.toUpperCase();
+            
+            const isAnyHovered = hoveredIndex !== null;
+            const isHovered = hoveredIndex === index;
 
-                return (
-                  <button
-                    key={s.category}
-                    onClick={() => setActiveTab(s.category)}
-                    className={`flex-1 flex flex-col items-center justify-center rounded-[32px] border transition-all duration-300 relative group overflow-hidden ${
-                      isActive
-                        ? 'border-primary/50 bg-primary/8 shadow-[0_0_24px_-8px_oklch(0.72 0.16 210 / 0.25)]'
-                        : 'border-border/60 bg-card hover:border-primary/30 hover:bg-card/85'
+            return (
+              <div
+                key={categoryData.category}
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}
+                className={`relative h-full flex flex-col justify-between bg-card border rounded-[32px] overflow-hidden cursor-pointer transition-all duration-350 ease-[cubic-bezier(0.25,1,0.5,1)] ${
+                  isHovered 
+                    ? 'flex-[5] border-primary/50 bg-primary/8 shadow-[0_0_30px_-8px_oklch(0.72 0.16 210 / 0.25)]' 
+                    : isAnyHovered 
+                      ? 'flex-[0.4] min-w-[72px] border-border/60 hover:bg-card/85'
+                      : 'flex-[1] border-border/60 hover:border-primary/30 hover:bg-card/85'
+                }`}
+              >
+                {/* Background ambient glow inside active card */}
+                <div 
+                  className={`absolute top-0 right-0 w-80 h-80 rounded-full pointer-events-none blur-3xl translate-x-20 -translate-y-20 bg-primary transition-opacity duration-300 ${
+                    isHovered ? 'opacity-20' : 'opacity-0'
+                  }`} 
+                />
+
+                {/* ── CARD CONTENTS ── */}
+                <div className="p-8 xl:p-10 flex-grow flex flex-col relative overflow-hidden">
+                  
+                  {/* Skill List items */}
+                  <div 
+                    className={`w-full flex-grow flex flex-col transition-all duration-300 ease-out ${
+                      isHovered 
+                        ? 'opacity-100 translate-y-0' 
+                        : 'opacity-0 translate-y-4 pointer-events-none absolute inset-0 p-8 xl:p-10'
                     }`}
                   >
-                    {/* Vertical label text */}
+                    {isHovered && (
+                      <>
+                        {/* Section subheader */}
+                        <div className="text-[10px] font-bold text-muted-foreground/50 tracking-[0.3em] uppercase mb-8 border-b border-border/20 pb-4">
+                          SKILL SET INCLUDES
+                        </div>
+
+                        {/* List grid */}
+                        <div className="grid grid-cols-2 gap-y-4 gap-x-8">
+                          {categoryData.items.map((skill) => (
+                            <div key={skill} className="flex items-center gap-3 group">
+                              <span className="w-1.5 h-1.5 rounded-full bg-primary group-hover:scale-125 transition-transform duration-200" />
+                              <span className="text-base font-medium text-foreground/80 group-hover:text-foreground transition-colors duration-200">
+                                {skill}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      </>
+                    )}
+                  </div>
+
+                </div>
+
+                {/* ── CARD FOOTER ── */}
+                <div className="p-8 xl:p-10 pt-0 flex items-end justify-between w-full h-20 relative">
+                  
+                  {/* Horizontal Label (for expanded or default layout) */}
+                  <div 
+                    className={`absolute bottom-8 left-8 xl:left-10 transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] ${
+                      !isAnyHovered || isHovered 
+                        ? 'opacity-100 translate-y-0 scale-100' 
+                        : 'opacity-0 translate-y-4 scale-90 pointer-events-none'
+                    }`}
+                  >
+                    <h3 className={`font-black tracking-tight uppercase leading-none select-none transition-all duration-300 ${
+                      isHovered ? 'text-4xl xl:text-5xl text-foreground' : 'text-xl xl:text-2xl text-foreground/95'
+                    }`}>
+                      {label}
+                    </h3>
+                  </div>
+
+                  {/* Vertical Rotated Label (for shrunken state) */}
+                  <div 
+                    className={`absolute bottom-8 left-1/2 -translate-x-1/2 transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] ${
+                      isAnyHovered && !isHovered 
+                        ? 'opacity-100 translate-y-0 scale-100' 
+                        : 'opacity-0 translate-y-4 scale-90 pointer-events-none'
+                    }`}
+                  >
                     <span
-                      className={`text-sm tracking-[0.25em] font-extrabold uppercase whitespace-nowrap transition-colors duration-350 select-none ${
-                        isActive ? 'text-primary' : 'text-muted-foreground/70 group-hover:text-foreground'
-                      }`}
+                      className="text-xs sm:text-sm tracking-[0.25em] font-extrabold uppercase whitespace-nowrap text-muted-foreground/60 select-none hover:text-foreground"
                       style={{
                         writingMode: 'vertical-rl',
                         transform: 'rotate(180deg)',
@@ -95,73 +153,65 @@ export default function Skills() {
                     >
                       {label}
                     </span>
+                  </div>
 
-                    {/* Active glowing indicator light */}
-                    {isActive && (
-                      <span className="absolute bottom-6 w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-          </motion.div>
-
-          {/* Right Column: Display Card */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.25 }}
-            className="lg:col-span-7 xl:col-span-8"
-          >
-            <div className="relative h-full flex flex-col justify-between bg-card border border-border/60 rounded-[32px] p-8 sm:p-12 xl:p-14 overflow-hidden min-h-[380px] lg:min-h-[480px]">
-              
-              {/* Background ambient glow inside card */}
-              <div className="absolute top-0 right-0 w-80 h-80 rounded-full pointer-events-none opacity-20 blur-3xl translate-x-20 -translate-y-20 bg-primary" />
-              
-              {/* Card top subheader */}
-              <div>
-                <div className="text-[10px] font-bold text-muted-foreground/50 tracking-[0.3em] uppercase mb-8 border-b border-border/20 pb-4">
-                  SKILL SET INCLUDES
+                  {/* Decorative glowing dot when card is active */}
+                  <div 
+                    className={`w-2.5 h-2.5 rounded-full bg-foreground/90 glow-primary flex-shrink-0 ml-auto mb-1 transition-all duration-300 ${
+                      isHovered ? 'opacity-100 scale-100' : 'opacity-0 scale-50'
+                    }`} 
+                  />
                 </div>
 
-                {/* Skill List items */}
-                <motion.div
-                  key={activeTab}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-8"
-                >
-                  {activeSkills.map((skill) => (
-                    <div key={skill} className="flex items-center gap-3 group">
-                      <span className="w-1.5 h-1.5 rounded-full bg-primary group-hover:scale-125 transition-transform duration-200" />
-                      <span className="text-base font-medium text-foreground/80 group-hover:text-foreground transition-colors duration-200">
-                        {skill}
-                      </span>
-                    </div>
-                  ))}
-                </motion.div>
               </div>
+            );
+          })}
+        </div>
 
-              {/* Card bottom footer */}
-              <div className="flex items-end justify-between mt-8">
-                <motion.div
-                  key={activeTab}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <h3 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-foreground uppercase leading-none select-none">
-                    {displayName}
-                  </h3>
-                </motion.div>
+        {/* ── MOBILE ACCORDION LAYOUT (lg hidden) ── */}
+        <div className="lg:hidden flex flex-col gap-4">
+          {skills.map((categoryData, index) => {
+            const label = categoryDisplayNames[categoryData.category] || categoryData.category.toUpperCase();
+            const isActive = hoveredIndex === index;
 
-                {/* Decorative dot from screenshot */}
-                <div className="w-2.5 h-2.5 rounded-full bg-foreground/90 glow-primary" />
+            return (
+              <div
+                key={categoryData.category}
+                onClick={() => setHoveredIndex(isActive ? null : index)}
+                className={`bg-card border rounded-2xl p-6 transition-all duration-300 cursor-pointer overflow-hidden ${
+                  isActive ? 'border-primary/50 bg-primary/5' : 'border-border/60'
+                }`}
+              >
+                <div className="flex justify-between items-center">
+                  <h3 className="text-lg font-bold text-foreground tracking-tight uppercase">{label}</h3>
+                  <span className={`text-xl transition-transform duration-300 ${isActive ? 'rotate-180 text-primary' : 'text-muted-foreground'}`}>
+                    ▾
+                  </span>
+                </div>
+
+                <AnimatePresence>
+                  {isActive && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="mt-4 pt-4 border-t border-border/20"
+                    >
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        {categoryData.items.map((skill) => (
+                          <div key={skill} className="flex items-center gap-2">
+                            <span className="w-1.2 h-1.2 rounded-full bg-primary" />
+                            <span className="text-sm font-medium text-foreground/80">{skill}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
-            </div>
-          </motion.div>
-
+            );
+          })}
         </div>
 
       </div>

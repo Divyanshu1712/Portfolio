@@ -47,13 +47,20 @@ export interface BlogPost {
 }
 
 export const blogPosts: BlogPost[] = [
-  // Add blog posts here or auto-fetch from dev.to / hashnode API
-  // {
-  //   title: 'Building PDF pipelines with Python',
-  //   excerpt: 'How I extracted structured data from complex PDFs at BOT Mantra...',
-  //   date: '2025-06-01',
-  //   tags: ['Python', 'PDF', 'Automation'],
-  //   url: '#',
-  //   readTime: '5 min read',
-  // },
+  {
+    title: 'Scaling Python Automation Pipelines: A Case Study on PDF Data Extraction',
+    excerpt: 'An in-depth look at how we built a highly reliable PDF processing pipeline, extracting tables and key fields from unstructured documents using Python libraries.',
+    date: 'July 2026',
+    tags: ['Python', 'Automation', 'PDFs'],
+    url: 'https://github.com/Divyanshu1712',
+    readTime: '6 min read',
+  },
+  {
+    title: 'Why FastAPI is My Go-To Framework for Backend Engineering',
+    excerpt: 'Comparing performance, developer experience, and typing validations between FastAPI, Flask, and Express.js in production environments.',
+    date: 'June 2026',
+    tags: ['FastAPI', 'Python', 'Backend'],
+    url: 'https://github.com/Divyanshu1712',
+    readTime: '4 min read',
+  },
 ];

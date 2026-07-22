@@ -4,18 +4,17 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
+import { usePathname } from 'next/navigation';
 import { Sun, Moon, Menu, X, Download } from 'lucide-react';
-// import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { siteConfig } from '@/config/site';
-import { Button } from '@base-ui/react/button';
 
 const navItems = [
-  { name: 'About', href: '#about' },
-  { name: 'Skills', href: '#skills' },
-  { name: 'Experience', href: '#experience' },
-  { name: 'Projects', href: '#projects' },
-  { name: 'Blog', href: '#blog' },
-  { name: 'Contact', href: '#contact' },
+  { name: 'About', href: '/about' },
+  { name: 'Skills', href: '/#skills' },
+  { name: 'Projects', href: '/projects' },
+  { name: 'Blog', href: '/blog' },
+  { name: 'Contact', href: '/#contact' },
 ];
 
 export default function Navbar() {
@@ -24,6 +23,7 @@ export default function Navbar() {
   const [mounted, setMounted] = useState(false);
   const [activeSection, setActiveSection] = useState('');
   const { theme, setTheme } = useTheme();
+  const pathname = usePathname();
 
   useEffect(() => { setMounted(true); }, []);
 
@@ -35,9 +35,14 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Scroll spy — highlight active nav link
+  // Scroll spy — highlight active nav link on the homepage
   useEffect(() => {
-    const sectionIds = navItems.map(item => item.href.replace('#', ''));
+    if (pathname !== '/') return;
+
+    const sectionIds = navItems
+      .filter(item => item.href.startsWith('/#'))
+      .map(item => item.href.replace('/#', ''));
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach(entry => {
@@ -51,7 +56,7 @@ export default function Navbar() {
       if (el) observer.observe(el);
     });
     return () => observer.disconnect();
-  }, [mounted]);
+  }, [mounted, pathname]);
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -67,10 +72,11 @@ export default function Navbar() {
       <div className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center pt-4 px-4 pointer-events-none">
         {/* Floating pill nav */}
         <motion.nav
-          className={`pointer-events-auto flex items-center gap-1 px-3 py-2 rounded-full border transition-all duration-300 ${isScrolled
-            ? 'bg-card/80 backdrop-blur-xl border-border/80 shadow-lg shadow-black/20'
-            : 'bg-card/60 backdrop-blur-md border-border/50'
-            }`}
+          className={`pointer-events-auto flex items-center gap-1 px-3 py-2 rounded-full border transition-all duration-300 ${
+            isScrolled
+              ? 'bg-card/80 backdrop-blur-xl border-border/80 shadow-lg shadow-black/20'
+              : 'bg-card/60 backdrop-blur-md border-border/50'
+          }`}
           initial={{ y: -80, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
@@ -89,15 +95,20 @@ export default function Navbar() {
           {/* Desktop nav links */}
           <div className="hidden md:flex items-center gap-0.5">
             {navItems.map((item) => {
-              const isActive = activeSection === item.href.replace('#', '');
+              // Highlight based on current pathname OR active section anchor on home page
+              const isLinkActive = 
+                pathname === item.href || 
+                (pathname === '/' && item.href.startsWith('/#') && activeSection === item.href.replace('/#', ''));
+
               return (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${isActive
-                    ? 'bg-primary/15 text-primary'
-                    : 'text-foreground/60 hover:text-foreground hover:bg-muted/60'
-                    }`}
+                  className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
+                    isLinkActive
+                      ? 'bg-primary/15 text-primary'
+                      : 'text-foreground/60 hover:text-foreground hover:bg-muted/60'
+                  }`}
                 >
                   {item.name}
                 </Link>
@@ -199,7 +210,7 @@ export default function Navbar() {
             </nav>
 
             <div className="mt-auto pt-8 flex flex-col gap-3">
-              <Link href="#contact" onClick={closeMobileMenu}>
+              <Link href="/#contact" onClick={closeMobileMenu}>
                 <Button className="w-full" size="lg">
                   Get in Touch
                 </Button>
