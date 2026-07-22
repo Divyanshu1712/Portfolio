@@ -3,7 +3,7 @@ export const siteConfig = {
   title: "Divyanshu Srivastava | Full Stack Developer",
   description:
     "Portfolio of Divyanshu Srivastava — Full Stack Developer specializing in FastAPI, React, Azure, and automation systems.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:4242",
   ogImage: "/Profile-avtar.jpg",
   keywords: [
     "Divyanshu Srivastava",

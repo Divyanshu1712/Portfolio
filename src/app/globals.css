@@ -9,34 +9,35 @@
 ═══════════════════════════════════════════════════════════════ */
 
 @layer base {
-  /* ── Dark mode (default) ── */
+  /* ── Dark mode (default pitch black modern portfolio) ── */
   :root {
     /* Backgrounds */
-    --background: 0.11 0.012 240;     /* deep dark slate-blue */
-    --foreground: 0.95 0.008 220;     /* soft off-white with cool tint */
+    --background: 0.04 0.005 240;     /* deep sleek pitch black */
+    --foreground: 0.98 0 0;           /* pure crisp white */
 
     /* Cards / Surfaces */
-    --card: 0.15 0.014 240;           /* slightly lighter than bg */
-    --card-foreground: 0.95 0.008 220;
+    --card: 0.09 0.008 240;           /* sleek dark surface */
+    --card-foreground: 0.98 0 0;
 
-    --popover: 0.14 0.013 240;
-    --popover-foreground: 0.95 0.008 220;
+    --popover: 0.08 0.008 240;
+    --popover-foreground: 0.98 0 0;
 
-    /* Primary — Cyan/Sky Blue accent */
-    --primary: 0.72 0.16 210;         /* cyan-blue — vivid but not blinding */
-    --primary-foreground: 0.08 0.01 240;
+    /* Primary — Blue highlight accent (inspired by reference site) */
+    --primary: 0.62 0.22 250;         /* rich vibrant electric blue */
+    --primary-foreground: 1 0 0;
 
-    /* Secondary — Muted slate */
-    --secondary: 0.19 0.016 240;
-    --secondary-foreground: 0.85 0.01 220;
+    /* Secondary — Dark slate */
+    --secondary: 0.14 0.01 240;
+    --secondary-foreground: 0.9 0 0;
 
     /* Muted */
-    --muted: 0.19 0.014 240;
-    --muted-foreground: 0.58 0.02 230;
+    --muted: 0.14 0.01 240;
+    --muted-foreground: 0.55 0.01 240;
 
-    /* Accent — Electric cyan for highlights */
-    --accent: 0.75 0.18 195;          /* bright cyan teal */
-    --accent-foreground: 0.08 0.01 240;
+    /* Accent — Bright blue electric highlight */
+    --accent: 0.65 0.24 250;
+    --accent-foreground: 1 0 0;
+
 
     /* Destructive */
     --destructive: 0.577 0.245 27.325;
@@ -144,9 +145,17 @@
     scroll-behavior: smooth;
   }
 
+  /* Hide system default cursor on desktop to prioritize custom trail cursor */
+  @media (pointer: fine) {
+    html, body, *, *::before, *::after, a, button, input, select, textarea, [role="button"], .cursor-pointer {
+      cursor: none !important;
+    }
+  }
+
   h1, h2, h3, h4, h5, h6 {
     @apply font-bold text-foreground tracking-tight;
   }
+
 
   p {
     @apply text-foreground/80;
@@ -388,3 +397,18 @@
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
 }
+
+@keyframes giggle {
+  0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+  25% { transform: translateY(-8px) rotate(-6deg) scale(1.12); }
+  75% { transform: translateY(-4px) rotate(6deg) scale(1.08); }
+}
+
+.animate-giggle {
+  animation: giggle 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.font-display {
+  font-family: var(--font-syne), var(--font-sans), system-ui, sans-serif;
+  letter-spacing: -0.04em;
+}

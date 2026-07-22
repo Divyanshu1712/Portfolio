@@ -1,10 +1,15 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Syne } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const syne = Syne({
+  subsets: ["latin"],
+  weight: ["700", "800"],
+  variable: "--font-syne",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -44,8 +49,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} bg-background min-h-screen`}>
+    <html lang="en" className={`${inter.variable} ${syne.variable}`} suppressHydrationWarning>
+      <body className={`${inter.className} bg-background min-h-screen antialiased overflow-x-hidden`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
@@ -58,3 +63,4 @@ export default function RootLayout({
     </html>
   );
 }
+

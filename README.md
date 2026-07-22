@@ -62,7 +62,7 @@ Running the Dev Server
 npm run dev
 ```
 
-Then visit `http://localhost:3000` in your browser.
+Then visit `http://localhost:4242` in your browser.
 
 ---
 
