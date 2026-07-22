@@ -160,6 +160,19 @@
   p {
     @apply text-foreground/80;
   }
+
+  /* ── Text selection colors per theme ── */
+  /* Dark mode: subtle primary blue selection */
+  ::selection {
+    background-color: oklch(var(--primary) / 0.3);
+    color: oklch(var(--foreground));
+  }
+
+  /* Light mode: default system-style selection (gray/neutral, not blue) */
+  .light ::selection {
+    background-color: rgb(180 180 180 / 0.5);
+    color: oklch(var(--foreground));
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -219,21 +232,21 @@
 
 .nav-link {
   @apply transition-colors duration-200 relative text-sm font-medium;
-  color: oklch(var(--foreground) / 0.65);
+  color: oklch(var(--muted-foreground));
 }
 .nav-link::after {
   content: '';
   @apply absolute -bottom-0.5 left-0 w-0 h-px transition-all duration-300;
-  background: oklch(0.72 0.16 210);
+  background: oklch(var(--primary));
 }
 .nav-link:hover {
-  color: oklch(0.72 0.16 210);
+  color: oklch(var(--primary));
 }
 .nav-link:hover::after {
   @apply w-full;
 }
 .nav-link.active {
-  color: oklch(0.72 0.16 210);
+  color: oklch(var(--primary));
 }
 .nav-link.active::after {
   @apply w-full;
@@ -247,8 +260,8 @@
   @apply transition-all duration-300 border border-border/60;
 }
 .card-hover:hover {
-  border-color: oklch(0.72 0.16 210 / 0.4);
-  box-shadow: 0 4px 24px -6px oklch(0.72 0.16 210 / 0.25);
+  border-color: oklch(var(--primary) / 0.4);
+  box-shadow: 0 4px 24px -6px oklch(var(--primary) / 0.25);
   transform: translateY(-2px);
 }
 
@@ -258,21 +271,21 @@
 
 .contact-icon {
   @apply w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300;
-  background-color: oklch(0.72 0.16 210 / 0.1);
-  color: oklch(0.72 0.16 210);
+  background-color: oklch(var(--primary) / 0.1);
+  color: oklch(var(--primary));
 }
 .contact-icon:hover,
 .group:hover .contact-icon {
-  background-color: oklch(0.72 0.16 210 / 0.2);
+  background-color: oklch(var(--primary) / 0.2);
 }
 
 .social-icon {
   @apply w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300;
-  background-color: oklch(0.72 0.16 210 / 0.1);
-  color: oklch(0.72 0.16 210);
+  background-color: oklch(var(--primary) / 0.1);
+  color: oklch(var(--primary));
 }
 .social-icon:hover {
-  background-color: oklch(0.72 0.16 210 / 0.2);
+  background-color: oklch(var(--primary) / 0.2);
   transform: translateY(-2px);
 }
 
@@ -283,49 +296,32 @@
 .form-input {
   @apply w-full rounded-lg px-3 py-2 sm:px-4 sm:py-3
          focus:outline-none transition-all duration-300 text-sm sm:text-base;
-  background: oklch(0.17 0.015 240);
-  border: 1px solid oklch(0.72 0.16 210 / 0.2);
-  color: oklch(0.95 0.008 220);
+  background: oklch(var(--input) / 0.6);
+  border: 1px solid oklch(var(--border));
+  color: oklch(var(--foreground));
 }
 .form-input::placeholder {
-  color: oklch(0.55 0.015 230);
+  color: oklch(var(--muted-foreground));
 }
 .form-input:focus {
-  border-color: oklch(0.72 0.16 210 / 0.6);
-  box-shadow: 0 0 0 3px oklch(0.72 0.16 210 / 0.12);
+  border-color: oklch(var(--primary) / 0.8);
+  box-shadow: 0 0 0 3px oklch(var(--primary) / 0.15);
 }
 
 .form-textarea {
   @apply w-full rounded-lg px-3 py-2 sm:px-4 sm:py-3
          focus:outline-none transition-all duration-300
          min-h-[100px] sm:min-h-[120px] resize-none text-sm sm:text-base;
-  background: oklch(0.17 0.015 240);
-  border: 1px solid oklch(0.72 0.16 210 / 0.2);
-  color: oklch(0.95 0.008 220);
+  background: oklch(var(--input) / 0.6);
+  border: 1px solid oklch(var(--border));
+  color: oklch(var(--foreground));
 }
 .form-textarea::placeholder {
-  color: oklch(0.55 0.015 230);
+  color: oklch(var(--muted-foreground));
 }
 .form-textarea:focus {
-  border-color: oklch(0.72 0.16 210 / 0.6);
-  box-shadow: 0 0 0 3px oklch(0.72 0.16 210 / 0.12);
-}
-
-/* Light mode form overrides */
-.light .form-input,
-.light .form-textarea {
-  background: oklch(0.98 0.004 240);
-  border-color: oklch(0.52 0.2 215 / 0.25);
-  color: oklch(0.13 0.015 240);
-}
-.light .form-input::placeholder,
-.light .form-textarea::placeholder {
-  color: oklch(0.55 0.02 230);
-}
-.light .form-input:focus,
-.light .form-textarea:focus {
-  border-color: oklch(0.52 0.2 215 / 0.7);
-  box-shadow: 0 0 0 3px oklch(0.52 0.2 215 / 0.1);
+  border-color: oklch(var(--primary) / 0.8);
+  box-shadow: 0 0 0 3px oklch(var(--primary) / 0.15);
 }
 
 /* ═══════════════════════════════════════════════════════════════

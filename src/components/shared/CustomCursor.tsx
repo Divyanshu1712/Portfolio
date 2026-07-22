@@ -146,7 +146,7 @@ export default function CustomCursor() {
             ref={(el) => {
               trailRefs.current[i] = el;
             }}
-            className="absolute top-0 left-0 rounded-full bg-white will-change-transform"
+            className="absolute top-0 left-0 rounded-full bg-primary will-change-transform"
             style={{
               width: `${size}px`,
               height: `${size}px`,
@@ -160,11 +160,7 @@ export default function CustomCursor() {
       {/* Solid lead circle */}
       <div
         ref={headRef}
-        className="absolute top-0 left-0 rounded-full bg-white will-change-transform transition-[width,height] duration-150 ease-out"
-        style={{
-          boxShadow:
-            '0 0 6px rgba(255,255,255,0.9), 0 0 16px rgba(255,255,255,0.5)',
-        }}
+        className="absolute top-0 left-0 rounded-full bg-primary will-change-transform transition-[width,height] duration-150 ease-out shadow-[0_0_12px_oklch(var(--primary)/0.8)]"
       />
     </div>
   );

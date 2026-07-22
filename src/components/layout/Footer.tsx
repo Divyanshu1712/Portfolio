@@ -30,29 +30,29 @@ export default function Footer() {
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
   return (
-    <footer className="relative border-t border-neutral-800 bg-[#050505] text-white mt-4 sm:mt-8">
+    <footer className="relative border-t border-border bg-background text-foreground mt-4 sm:mt-8">
       {/* Top Subtle Accent Line */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-12 py-12 sm:py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-12">
 
           {/* Column 1 — Brand & Overview */}
           <div className="flex flex-col gap-4">
-            <Link href="/" className="text-2xl font-extrabold tracking-tight text-white w-fit">
-              DIVYANSHU<span className="text-blue-500">.</span>
+            <Link href="/" className="text-2xl font-extrabold tracking-tight text-foreground w-fit">
+              DIVYANSHU<span className="text-primary">.</span>
             </Link>
-            <p className="text-sm text-neutral-400 leading-relaxed max-w-xs">
+            <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">
               Full Stack Developer specializing in FastAPI backends, workflow automation, and sleek modern UI experiences.
             </p>
-            <p className="text-xs text-neutral-500">
+            <p className="text-xs text-muted-foreground/80">
               Available for full-time roles & freelance opportunities.
             </p>
           </div>
 
           {/* Column 2 — Quick Links */}
           <div className="flex flex-col gap-4">
-            <h3 className="text-xs font-bold text-neutral-200 uppercase tracking-widest">
+            <h3 className="text-xs font-bold text-foreground uppercase tracking-widest">
               Navigation
             </h3>
             <nav className="grid grid-cols-2 gap-x-4 gap-y-2.5">
@@ -60,7 +60,7 @@ export default function Footer() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="text-sm text-neutral-400 hover:text-blue-400 transition-colors duration-200"
+                  className="text-sm text-muted-foreground hover:text-primary transition-colors duration-200"
                 >
                   {item.name}
                 </Link>
@@ -68,25 +68,25 @@ export default function Footer() {
             </nav>
           </div>
 
-          {/* Column 3 — Contact Information & Socials (Moved from Contact.tsx) */}
+          {/* Column 3 — Contact Information & Socials */}
           <div className="flex flex-col gap-4">
-            <h3 className="text-xs font-bold text-neutral-200 uppercase tracking-widest">
+            <h3 className="text-xs font-bold text-foreground uppercase tracking-widest">
               Contact Information
             </h3>
             <div className="space-y-3">
               {contactDetails.map(({ icon: Icon, label, value, href }) => (
                 <div key={label} className="flex items-center gap-3 group">
-                  <div className="w-8 h-8 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center text-blue-400 group-hover:border-blue-500/50 transition-colors flex-shrink-0">
+                  <div className="w-8 h-8 rounded-full bg-card border border-border flex items-center justify-center text-primary group-hover:border-primary/50 transition-colors flex-shrink-0">
                     <Icon className="w-3.5 h-3.5" />
                   </div>
                   <div>
-                    <p className="text-[11px] text-neutral-500 leading-none">{label}</p>
+                    <p className="text-[11px] text-muted-foreground/80 leading-none">{label}</p>
                     {href ? (
-                      <a href={href} className="text-xs sm:text-sm font-medium text-neutral-300 hover:text-blue-400 transition-colors">
+                      <a href={href} className="text-xs sm:text-sm font-medium text-foreground/90 hover:text-primary transition-colors">
                         {value}
                       </a>
                     ) : (
-                      <p className="text-xs sm:text-sm font-medium text-neutral-300">{value}</p>
+                      <p className="text-xs sm:text-sm font-medium text-foreground/90">{value}</p>
                     )}
                   </div>
                 </div>
@@ -102,7 +102,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={name}
-                  className="w-9 h-9 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center text-neutral-400 hover:text-white hover:border-blue-500/50 hover:bg-neutral-800 transition-all duration-200"
+                  className="w-9 h-9 rounded-full bg-card border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-primary/50 hover:bg-muted transition-all duration-200"
                 >
                   <Icon className="w-4 h-4" />
                 </a>
@@ -113,14 +113,14 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 pt-6 border-t border-neutral-800/80 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-neutral-500 text-center sm:text-left">
+        <div className="mt-12 pt-6 border-t border-border/80 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-xs text-muted-foreground/80 text-center sm:text-left">
             © {new Date().getFullYear()} Divyanshu Srivastava. All rights reserved.
           </p>
 
           <button
             onClick={scrollToTop}
-            className="flex items-center gap-1.5 text-xs text-neutral-400 hover:text-blue-400 transition-colors duration-200 group"
+            className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-primary transition-colors duration-200 group"
             aria-label="Back to top"
           >
             <ArrowUp className="w-3.5 h-3.5 transition-transform duration-200 group-hover:-translate-y-0.5" />

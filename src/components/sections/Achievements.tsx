@@ -7,9 +7,9 @@ import SectionWrapper from '@/components/shared/SectionWrapper';
 import { achievements } from '@/data/content';
 
 const typeColors = {
-  award: 'text-amber-400 bg-amber-400/10 border-amber-400/20',
+  award: 'text-primary bg-primary/10 border-primary/20',
   certification: 'text-primary bg-primary/10 border-primary/20',
-  recognition: 'text-purple-400 bg-purple-400/10 border-purple-400/20',
+  recognition: 'text-accent bg-accent/10 border-accent/20',
 };
 
 const typeIcons = {

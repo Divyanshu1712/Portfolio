@@ -57,17 +57,17 @@ export default function Contact() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
-          className="relative bg-neutral-900/80 backdrop-blur-xl border border-neutral-800 rounded-3xl p-6 sm:p-8 shadow-2xl overflow-hidden"
+          className="relative bg-card/80 backdrop-blur-xl border border-border rounded-3xl p-6 sm:p-8 shadow-2xl overflow-hidden"
         >
           {/* Subtle Glow Background Effect */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
 
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-lg font-bold text-white flex items-center gap-2">
-              <Send className="w-4 h-4 text-blue-400" />
+            <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
+              <Send className="w-4 h-4 text-primary" />
               <span>Send a Message</span>
             </h3>
-            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-medium">
+            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-medium">
               <Sparkles className="w-3 h-3" /> Quick Response
             </span>
           </div>
@@ -80,11 +80,11 @@ export default function Contact() {
                   {...register('name')}
                   type="text"
                   placeholder="Your Name"
-                  className={`form-input bg-neutral-950/80 border-neutral-800 focus:border-blue-500 text-sm py-2.5 rounded-xl ${
+                  className={`form-input text-sm py-2.5 rounded-xl ${
                     errors.name ? 'border-destructive/60' : ''
                   }`}
                 />
-                {errors.name && <p className="text-xs text-red-400 mt-1">{errors.name.message}</p>}
+                {errors.name && <p className="text-xs text-destructive mt-1">{errors.name.message}</p>}
               </div>
 
               <div>
@@ -92,11 +92,11 @@ export default function Contact() {
                   {...register('email')}
                   type="email"
                   placeholder="Your Email"
-                  className={`form-input bg-neutral-950/80 border-neutral-800 focus:border-blue-500 text-sm py-2.5 rounded-xl ${
+                  className={`form-input text-sm py-2.5 rounded-xl ${
                     errors.email ? 'border-destructive/60' : ''
                   }`}
                 />
-                {errors.email && <p className="text-xs text-red-400 mt-1">{errors.email.message}</p>}
+                {errors.email && <p className="text-xs text-destructive mt-1">{errors.email.message}</p>}
               </div>
             </div>
 
@@ -106,22 +106,22 @@ export default function Contact() {
                 {...register('message')}
                 placeholder="Your Message..."
                 rows={3}
-                className={`form-textarea bg-neutral-950/80 border-neutral-800 focus:border-blue-500 text-sm py-2.5 rounded-xl ${
+                className={`form-textarea text-sm py-2.5 rounded-xl ${
                   errors.message ? 'border-destructive/60' : ''
                 }`}
               />
-              {errors.message && <p className="text-xs text-red-400 mt-1">{errors.message.message}</p>}
+              {errors.message && <p className="text-xs text-destructive mt-1">{errors.message.message}</p>}
             </div>
 
-            {/* Sleek Glowing Gradient Pill Submit Button */}
+            {/* Sleek Glowing Pill Submit Button */}
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full mt-2 py-3 rounded-full bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-sm transition-all duration-300 shadow-[0_0_25px_rgba(37,99,235,0.45)] hover:shadow-[0_0_35px_rgba(37,99,235,0.65)] disabled:opacity-50 cursor-pointer"
+              className="w-full mt-2 py-3 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-sm transition-all duration-300 shadow-lg shadow-primary/25 hover:shadow-primary/40 disabled:opacity-50 cursor-pointer"
             >
               {isSubmitting ? (
                 <span className="flex items-center justify-center gap-2">
-                  <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  <span className="w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin" />
                   Sending Message…
                 </span>
               ) : (

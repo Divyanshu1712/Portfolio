@@ -46,8 +46,9 @@ export default function Hero() {
     setMessageIndex((prev) => (prev + 1) % messages.length);
   };
 
+
   return (
-    <section className="relative min-h-screen w-full flex flex-col items-center justify-between px-4 sm:px-8 lg:px-12 pt-28 pb-12 overflow-hidden bg-[#050505] text-white">
+    <section className="relative min-h-screen w-full flex flex-col items-center justify-between px-4 sm:px-8 lg:px-12 pt-28 pb-12 overflow-hidden bg-background text-foreground">
 
       {/* ── Sleep Mode Overlay ── */}
       <AnimatePresence>
@@ -56,20 +57,20 @@ export default function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex flex-col items-center justify-center pointer-events-auto"
+            className="fixed inset-0 z-50 bg-background/95 backdrop-blur-md flex flex-col items-center justify-center pointer-events-auto"
             onClick={() => setIsAsleep(false)}
           >
             <motion.div
               animate={{ y: [0, -10, 0] }}
               transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-              className="text-center p-8 rounded-3xl bg-neutral-900/80 border border-neutral-800 shadow-2xl max-w-sm"
+              className="text-center p-8 rounded-3xl bg-card/90 border border-border shadow-2xl max-w-sm"
             >
               <div className="text-5xl mb-4">😴 🌙</div>
-              <h3 className="text-2xl font-bold text-white mb-2">Divyanshu is asleep... zzz</h3>
-              <p className="text-sm text-neutral-400 mb-6">Click anywhere on the screen to wake up!</p>
+              <h3 className="text-2xl font-bold text-foreground mb-2">Divyanshu is asleep... zzz</h3>
+              <p className="text-sm text-muted-foreground mb-6">Click anywhere on the screen to wake up!</p>
               <button
                 onClick={() => setIsAsleep(false)}
-                className="px-6 py-2.5 rounded-full bg-blue-600 hover:bg-blue-500 text-white font-medium text-sm transition-all shadow-lg shadow-blue-600/30"
+                className="px-6 py-2.5 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground font-medium text-sm transition-all shadow-lg shadow-primary/20"
               >
                 Wake Up ☀️
               </button>
@@ -83,15 +84,15 @@ export default function Hero() {
         <div
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] rounded-full opacity-20"
           style={{
-            background: 'radial-gradient(circle, rgba(37,99,235,0.25) 0%, rgba(0,0,0,0) 70%)',
+            background: 'radial-gradient(circle, oklch(var(--primary) / 0.3) 0%, transparent 70%)',
             filter: 'blur(80px)',
           }}
         />
         <div
-          className="absolute inset-0 opacity-[0.02]"
+          className="absolute inset-0 opacity-[0.03]"
           style={{
             backgroundImage:
-              'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
+              'linear-gradient(oklch(var(--foreground) / 0.15) 1px, transparent 1px), linear-gradient(90deg, oklch(var(--foreground) / 0.15) 1px, transparent 1px)',
             backgroundSize: '80px 80px',
           }}
         />
@@ -104,7 +105,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           onClick={handlePillClick}
-          className="group relative flex items-center justify-center px-6 py-2 rounded-full bg-neutral-900/90 border border-neutral-800 hover:border-blue-500/50 text-xs sm:text-sm font-medium text-neutral-200 transition-all duration-300 shadow-xl cursor-pointer overflow-hidden h-10 min-w-[280px] sm:min-w-[340px] select-none"
+          className="group relative flex items-center justify-center px-6 py-2 rounded-full bg-card/95 border border-border/80 hover:border-primary/50 text-xs sm:text-sm font-semibold text-foreground transition-all duration-300 shadow-lg backdrop-blur-md cursor-pointer overflow-hidden h-10 min-w-[280px] sm:min-w-[340px] select-none"
           title="Click to next, double click to sleep"
         >
           <AnimatePresence mode="wait">
@@ -114,21 +115,21 @@ export default function Hero() {
               animate={{ y: 0, opacity: 1, scale: 1 }}
               exit={{ y: -16, opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.35, ease: 'easeOut' }}
-              className="flex items-center gap-2 whitespace-nowrap"
+              className="flex items-center gap-2 whitespace-nowrap text-foreground"
             >
               {messages[messageIndex].icon === 'star' && (
-                <Star className="w-3.5 h-3.5 text-blue-400 fill-blue-400/30 animate-spin-slow" />
+                <Star className="w-3.5 h-3.5 text-primary fill-primary/30 animate-spin-slow" />
               )}
               {messages[messageIndex].icon === 'pulse' && (
                 <span className="flex h-2 w-2 relative">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-blue-500" />
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
                 </span>
               )}
               {messages[messageIndex].icon === 'sparkles' && (
-                <Sparkles className="w-3.5 h-3.5 text-blue-400" />
+                <Sparkles className="w-3.5 h-3.5 text-primary" />
               )}
-              <span className="group-hover:text-blue-300 transition-colors">
+              <span className="text-foreground group-hover:text-primary transition-colors font-semibold">
                 {messages[messageIndex].text}
               </span>
             </motion.div>
@@ -137,18 +138,18 @@ export default function Hero() {
       </div>
 
       {/* ── Main Full-Width Hero Interactive Display Title ── */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-center justify-center my-auto py-6">
+      <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-center justify-center my-auto py-4">
         {/* Line 1: Divyanshu */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="w-full flex justify-center"
+          className="w-full flex justify-center text-foreground"
         >
           <GiggleText
             text="Divyanshu"
-            className="text-6xl sm:text-8xl md:text-[110px] lg:text-[145px] xl:text-[175px] font-black leading-none tracking-tight text-center"
-            accentColor="#3b82f6"
+            className="text-7xl sm:text-9xl md:text-[125px] lg:text-[160px] xl:text-[190px] font-black leading-none tracking-[-0.06em] text-center text-foreground"
+            accentColor="oklch(var(--primary))"
           />
         </motion.div>
 
@@ -157,12 +158,12 @@ export default function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-          className="w-full flex justify-center mt-2 sm:mt-4"
+          className="w-full flex justify-center mt-1 sm:mt-2 text-foreground"
         >
           <GiggleText
             text="Srivastava"
-            className="text-5xl sm:text-7xl md:text-[95px] lg:text-[130px] xl:text-[140px] font-black leading-none tracking-tight text-center"
-            accentColor="#3b82f6"
+            className="text-6xl sm:text-8xl md:text-[110px] lg:text-[145px] xl:text-[170px] font-black leading-none tracking-[-0.06em] text-center text-foreground"
+            accentColor="oklch(var(--primary))"
           />
         </motion.div>
       </div>
@@ -174,24 +175,24 @@ export default function Hero() {
         transition={{ duration: 0.6, delay: 0.4 }}
         className="relative z-10 w-full max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-4 mt-6"
       >
-        {/* View Work (White Pill Button) */}
+        {/* View Work Pill Button */}
         <Link href="#projects">
           <motion.div
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-2 px-8 py-3.5 rounded-full bg-white text-black font-semibold text-sm sm:text-base transition-all duration-300 shadow-[0_0_30px_rgba(255,255,255,0.3)] hover:shadow-[0_0_40px_rgba(255,255,255,0.5)] cursor-pointer"
+            className="flex items-center gap-2 px-8 py-3.5 rounded-full bg-primary text-primary-foreground font-bold text-sm sm:text-base transition-all duration-300 shadow-lg shadow-primary/25 hover:shadow-primary/40 cursor-pointer"
           >
             <span>View Work</span>
             <ArrowRight className="w-4 h-4" />
           </motion.div>
         </Link>
 
-        {/* My Experience (Dark Pill Button) */}
+        {/* My Experience Pill Button */}
         <Link href="#experience">
           <motion.div
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-2 px-8 py-3.5 rounded-full bg-neutral-900 border border-neutral-700 text-white font-semibold text-sm sm:text-base hover:bg-neutral-800 transition-all duration-300 shadow-md cursor-pointer"
+            className="flex items-center gap-2 px-8 py-3.5 rounded-full bg-card border border-border text-foreground font-bold text-sm sm:text-base hover:bg-muted transition-all duration-300 shadow-md cursor-pointer"
           >
             <span>My Experience</span>
           </motion.div>

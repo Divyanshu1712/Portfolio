@@ -1,12 +1,15 @@
 'use client';
 
 import { useEffect } from 'react';
+import { useTheme } from 'next-themes';
 import Layout from '@/components/layout/Layout';
 import { blogPosts } from '@/data/content';
 import { twitterUsername } from '@/data/social';
 import { Clock, Rss } from 'lucide-react';
 
 export default function BlogPage() {
+  const { theme } = useTheme();
+
   useEffect(() => {
     // Load Twitter script dynamically
     const script = document.createElement('script');
@@ -107,7 +110,7 @@ export default function BlogPage() {
                 
                 <a
                   className="twitter-timeline relative z-10 w-full"
-                  data-theme="dark"
+                  data-theme={theme === 'dark' ? 'dark' : 'light'}
                   data-height="420"
                   data-chrome="noheader nofooter noborder transparent scrollbar"
                   href={`https://twitter.com/${twitterUsername}?ref_src=twsrc%5Etfw`}
