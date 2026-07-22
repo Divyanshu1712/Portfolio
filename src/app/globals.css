@@ -325,26 +325,43 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   SCROLLBAR
+   SCROLLBAR  — theme-aware (dark & light mode)
 ═══════════════════════════════════════════════════════════════ */
 
 ::-webkit-scrollbar {
   width: 5px;
   height: 5px;
 }
+
+/* Track — uses the page background so it blends in naturally */
 ::-webkit-scrollbar-track {
-  background: oklch(0.11 0.012 240);
+  background: oklch(var(--background));
 }
+
+/* Thumb — uses the primary accent at low opacity */
 ::-webkit-scrollbar-thumb {
-  background: oklch(0.72 0.16 210 / 0.3);
+  background: oklch(var(--primary) / 0.35);
   border-radius: 999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: oklch(0.72 0.16 210 / 0.6);
+  background: oklch(var(--primary) / 0.65);
 }
+
+/* Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: oklch(0.72 0.16 210 / 0.3) oklch(0.11 0.012 240);
+  scrollbar-color: oklch(var(--primary) / 0.35) oklch(var(--background));
+}
+
+/* Light mode — slightly more visible thumb on the bright background */
+.light ::-webkit-scrollbar-thumb {
+  background: oklch(var(--primary) / 0.45);
+}
+.light ::-webkit-scrollbar-thumb:hover {
+  background: oklch(var(--primary) / 0.75);
+}
+.light * {
+  scrollbar-color: oklch(var(--primary) / 0.45) oklch(var(--background));
 }
 
 /* ═══════════════════════════════════════════════════════════════
