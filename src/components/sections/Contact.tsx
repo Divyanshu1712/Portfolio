@@ -5,10 +5,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Button } from '@/components/ui/button';
-import { Mail, Phone, MapPin, Github, Linkedin, Twitter, Instagram, CheckCircle, XCircle } from 'lucide-react';
+import { CheckCircle, XCircle, Send, Sparkles } from 'lucide-react';
 import SectionWrapper from '@/components/shared/SectionWrapper';
-import { socialLinks } from '@/data/social';
 
 const contactSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters.'),
@@ -17,19 +15,6 @@ const contactSchema = z.object({
 });
 
 type ContactFormData = z.infer<typeof contactSchema>;
-
-const contactInfo = [
-  { icon: Mail, label: 'Email', value: 'divyanshusrivastava619@gmail.com', href: 'mailto:divyanshusrivastava619@gmail.com' },
-  { icon: Phone, label: 'Phone', value: '+91 9026118735', href: 'tel:+919026118735' },
-  { icon: MapPin, label: 'Location', value: 'Basti, Uttar Pradesh, India', href: null },
-];
-
-const socialItems = [
-  { icon: Github, label: 'GitHub', href: socialLinks.github },
-  { icon: Linkedin, label: 'LinkedIn', href: socialLinks.linkedin },
-  { icon: Twitter, label: 'Twitter', href: socialLinks.twitter },
-  { icon: Instagram, label: 'Instagram', href: socialLinks.instagram },
-];
 
 export default function Contact() {
   const [toast, setToast] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
@@ -62,113 +47,92 @@ export default function Contact() {
     <SectionWrapper
       id="contact"
       title="Let's Connect"
-      subtitle="Have a project in mind or just want to say hi? I'd love to hear from you."
+      subtitle="Have a project in mind or want to collaborate? Drop me a line below."
+      className="pb-6 sm:pb-10 pt-16 sm:pt-20"
     >
-      <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
-        {/* Form */}
+      <div className="max-w-2xl mx-auto">
+        {/* Sleek Compact Glassmorphic Card */}
         <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
-          className="bg-card border border-border/60 rounded-2xl p-6 sm:p-8"
+          className="relative bg-neutral-900/80 backdrop-blur-xl border border-neutral-800 rounded-3xl p-6 sm:p-8 shadow-2xl overflow-hidden"
         >
-          <h3 className="text-lg font-semibold text-foreground mb-6">Send a Message</h3>
+          {/* Subtle Glow Background Effect */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
+
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-lg font-bold text-white flex items-center gap-2">
+              <Send className="w-4 h-4 text-blue-400" />
+              <span>Send a Message</span>
+            </h3>
+            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-medium">
+              <Sparkles className="w-3 h-3" /> Quick Response
+            </span>
+          </div>
+
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <div>
-              <input
-                {...register('name')}
-                type="text"
-                placeholder="Your Name"
-                className={`form-input ${errors.name ? 'border-destructive/60' : ''}`}
-              />
-              {errors.name && <p className="text-xs text-destructive mt-1">{errors.name.message}</p>}
+            {/* 2-Column Compact Layout for Name & Email */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <input
+                  {...register('name')}
+                  type="text"
+                  placeholder="Your Name"
+                  className={`form-input bg-neutral-950/80 border-neutral-800 focus:border-blue-500 text-sm py-2.5 rounded-xl ${
+                    errors.name ? 'border-destructive/60' : ''
+                  }`}
+                />
+                {errors.name && <p className="text-xs text-red-400 mt-1">{errors.name.message}</p>}
+              </div>
+
+              <div>
+                <input
+                  {...register('email')}
+                  type="email"
+                  placeholder="Your Email"
+                  className={`form-input bg-neutral-950/80 border-neutral-800 focus:border-blue-500 text-sm py-2.5 rounded-xl ${
+                    errors.email ? 'border-destructive/60' : ''
+                  }`}
+                />
+                {errors.email && <p className="text-xs text-red-400 mt-1">{errors.email.message}</p>}
+              </div>
             </div>
 
-            <div>
-              <input
-                {...register('email')}
-                type="email"
-                placeholder="Your Email"
-                className={`form-input ${errors.email ? 'border-destructive/60' : ''}`}
-              />
-              {errors.email && <p className="text-xs text-destructive mt-1">{errors.email.message}</p>}
-            </div>
-
+            {/* Compact Message Textarea */}
             <div>
               <textarea
                 {...register('message')}
-                placeholder="Your Message"
-                rows={5}
-                className={`form-textarea ${errors.message ? 'border-destructive/60' : ''}`}
+                placeholder="Your Message..."
+                rows={3}
+                className={`form-textarea bg-neutral-950/80 border-neutral-800 focus:border-blue-500 text-sm py-2.5 rounded-xl ${
+                  errors.message ? 'border-destructive/60' : ''
+                }`}
               />
-              {errors.message && <p className="text-xs text-destructive mt-1">{errors.message.message}</p>}
+              {errors.message && <p className="text-xs text-red-400 mt-1">{errors.message.message}</p>}
             </div>
 
-            <Button type="submit" className="w-full" size="lg" disabled={isSubmitting}>
+            {/* Sleek Glowing Gradient Pill Submit Button */}
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full mt-2 py-3 rounded-full bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-sm transition-all duration-300 shadow-[0_0_25px_rgba(37,99,235,0.45)] hover:shadow-[0_0_35px_rgba(37,99,235,0.65)] disabled:opacity-50 cursor-pointer"
+            >
               {isSubmitting ? (
-                <span className="flex items-center gap-2">
-                  <span className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                  Sending…
+                <span className="flex items-center justify-center gap-2">
+                  <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  Sending Message…
                 </span>
-              ) : 'Send Message'}
-            </Button>
+              ) : (
+                'Send Message →'
+              )}
+            </button>
           </form>
-        </motion.div>
-
-        {/* Contact info */}
-        <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, delay: 0.15 }}
-          viewport={{ once: true }}
-          className="flex flex-col gap-6"
-        >
-          <div className="bg-card border border-border/60 rounded-2xl p-6 sm:p-8 flex-1">
-            <h3 className="text-lg font-semibold text-foreground mb-6">Contact Information</h3>
-
-            <div className="space-y-5">
-              {contactInfo.map(({ icon: Icon, label, value, href }) => (
-                <div key={label} className="flex items-center gap-4 group">
-                  <div className="contact-icon flex-shrink-0">
-                    <Icon className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <p className="text-xs text-muted-foreground">{label}</p>
-                    {href ? (
-                      <a href={href} className="text-sm font-medium text-foreground/85 hover:text-primary transition-colors duration-200">
-                        {value}
-                      </a>
-                    ) : (
-                      <p className="text-sm font-medium text-foreground/85">{value}</p>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-8 pt-6 border-t border-border/40">
-              <p className="text-xs text-muted-foreground mb-4">Find me on social media</p>
-              <div className="flex gap-3">
-                {socialItems.map(({ icon: Icon, label, href }) => (
-                  <a
-                    key={label}
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={label}
-                    className="social-icon"
-                  >
-                    <Icon className="w-4 h-4" />
-                  </a>
-                ))}
-              </div>
-            </div>
-          </div>
         </motion.div>
       </div>
 
-      {/* Toast */}
+      {/* Toast Notification */}
       <AnimatePresence>
         {toast && (
           <motion.div
@@ -180,10 +144,11 @@ export default function Contact() {
               toast.type === 'success' ? 'toast-success' : 'toast-error'
             }`}
           >
-            {toast.type === 'success'
-              ? <CheckCircle className="w-5 h-5 flex-shrink-0" />
-              : <XCircle className="w-5 h-5 flex-shrink-0" />
-            }
+            {toast.type === 'success' ? (
+              <CheckCircle className="w-5 h-5 flex-shrink-0" />
+            ) : (
+              <XCircle className="w-5 h-5 flex-shrink-0" />
+            )}
             {toast.message}
           </motion.div>
         )}
