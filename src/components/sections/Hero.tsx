@@ -5,21 +5,36 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowRight, Star, Sparkles } from 'lucide-react';
 import GiggleText from '@/components/shared/GiggleText';
-
-const getGreeting = () => {
-  const hour = new Date().getHours();
-  if (hour < 12) return 'Good Morning ☀️';
-  if (hour < 17) return 'Good Afternoon 🌤️';
-  return 'Good Evening 🌙';
-};
+import { getGreetingData, type GreetingData } from '@/lib/greeting';
 
 export default function Hero() {
   const [isAsleep, setIsAsleep] = useState(false);
   const sleepCountRef = useRef(0);
   const [messageIndex, setMessageIndex] = useState(0);
 
+  // Greeting state — initialised on client to avoid SSR mismatch.
+  // Refreshed every minute so it stays accurate if the tab is left open.
+  const [greeting, setGreeting] = useState<GreetingData>({
+    greeting: 'Hello!',
+    message: 'Welcome to my portfolio.',
+    emoji: '👋',
+  });
+
+  useEffect(() => {
+    setGreeting(getGreetingData());
+    const refreshInterval = setInterval(() => {
+      setGreeting(getGreetingData());
+    }, 60_000); // re-evaluate every minute
+    return () => clearInterval(refreshInterval);
+  }, []);
+
   const messages = [
-    { id: 'greeting', text: getGreeting(), icon: 'sun' },
+    {
+      id: 'greeting',
+      text: `${greeting.emoji} ${greeting.greeting}`,
+      subtext: greeting.message,
+      icon: 'greeting',
+    },
     { id: 'available', text: 'Available for new opportunities', icon: 'star' },
     { id: 'sleep', text: 'Double-click me to sleep!', icon: 'pulse' },
     { id: 'role', text: 'Full Stack & Backend Specialist', icon: 'sparkles' },
@@ -102,7 +117,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           onClick={handlePillClick}
-          className="group relative flex items-center justify-center px-6 py-2 rounded-full bg-card/95 border border-border/80 hover:border-primary/50 text-xs sm:text-sm font-semibold text-foreground transition-all duration-300 shadow-lg backdrop-blur-md cursor-pointer overflow-hidden h-10 min-w-[280px] sm:min-w-[340px] select-none"
+          className="group relative flex items-center justify-center px-6 py-2.5 rounded-full bg-card/95 border border-border/80 hover:border-primary/50 text-xs sm:text-sm font-semibold text-foreground transition-all duration-300 shadow-lg backdrop-blur-md cursor-pointer overflow-hidden min-h-[44px] min-w-[300px] sm:min-w-[420px] select-none"
           title="Click to next, double click to sleep"
         >
           <AnimatePresence mode="wait">
@@ -112,23 +127,30 @@ export default function Hero() {
               animate={{ y: 0, opacity: 1, scale: 1 }}
               exit={{ y: -16, opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.35, ease: 'easeOut' }}
-              className="flex items-center gap-2 whitespace-nowrap text-foreground"
+              className="flex flex-col items-center gap-0.5 text-foreground"
             >
-              {messages[messageIndex].icon === 'star' && (
-                <Star className="w-3.5 h-3.5 text-primary fill-primary/30 animate-spin-slow" />
-              )}
-              {messages[messageIndex].icon === 'pulse' && (
-                <span className="flex h-2 w-2 relative">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
+              <div className="flex items-center gap-2 whitespace-nowrap">
+                {messages[messageIndex].icon === 'star' && (
+                  <Star className="w-3.5 h-3.5 text-primary fill-primary/30 animate-spin-slow" />
+                )}
+                {messages[messageIndex].icon === 'pulse' && (
+                  <span className="flex h-2 w-2 relative">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
+                  </span>
+                )}
+                {messages[messageIndex].icon === 'sparkles' && (
+                  <Sparkles className="w-3.5 h-3.5 text-primary" />
+                )}
+                <span className="text-foreground group-hover:text-primary transition-colors font-semibold">
+                  {messages[messageIndex].text}
+                </span>
+              </div>
+              {'subtext' in messages[messageIndex] && messages[messageIndex].subtext && (
+                <span className="text-[10px] text-muted-foreground leading-tight max-w-[300px] sm:max-w-[420px] text-center truncate px-1">
+                  {messages[messageIndex].subtext}
                 </span>
               )}
-              {messages[messageIndex].icon === 'sparkles' && (
-                <Sparkles className="w-3.5 h-3.5 text-primary" />
-              )}
-              <span className="text-foreground group-hover:text-primary transition-colors font-semibold">
-                {messages[messageIndex].text}
-              </span>
             </motion.div>
           </AnimatePresence>
         </motion.div>
