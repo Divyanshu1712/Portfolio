@@ -3,11 +3,41 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { Star, ExternalLink, Github, Code2, Sparkles } from 'lucide-react';
+import { Star, ExternalLink, Github, Code2, FolderGit2, FlaskConical } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import SectionWrapper from '@/components/shared/SectionWrapper';
 import { fetchGitHubProjects, type GitHubRepo } from '@/lib/github';
 import { githubUsername, socialLinks } from '@/data/social';
+import { projects } from '@/data/projects';
+
+// Extract major project GitHub URLs and repository names for filtering
+const majorProjectUrls = new Set(
+  projects.map((p) => p.github.toLowerCase().trim().replace(/\/$/, ''))
+);
+const majorProjectNames = new Set(
+  projects.map((p) => {
+    const url = p.github.trim().replace(/\/$/, '');
+    const parts = url.split('/');
+    return parts[parts.length - 1].toLowerCase();
+  })
+);
+
+const isExcludedRepo = (repo: GitHubRepo) => {
+  const repoUrl = repo.html_url.toLowerCase().trim().replace(/\/$/, '');
+  const repoName = repo.name.toLowerCase();
+
+  // Exclude major core projects
+  if (majorProjectUrls.has(repoUrl) || majorProjectNames.has(repoName)) {
+    return true;
+  }
+
+  // Exclude the portfolio repository itself
+  if (repoName.includes('portfolio')) {
+    return true;
+  }
+
+  return false;
+};
 
 const langColors: Record<string, string> = {
   JavaScript: '#f1e05a',
@@ -37,10 +67,14 @@ const RepoCard = ({ repo, index }: { repo: GitHubRepo; index: number }) => {
       <div>
         {/* Top Header */}
         <div className="flex items-center justify-between gap-2 mb-3">
-          <span className="inline-flex items-center gap-1.5 text-[11px] font-mono font-semibold px-2.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">
-            <Code2 className="w-3 h-3" />
-            Mini Project
-          </span>
+          <div className="flex items-center gap-2">
+            <div className="w-7 h-7 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
+              <FolderGit2 className="w-3.5 h-3.5" />
+            </div>
+            <span className="text-xs font-mono font-bold text-primary">
+              Mini Project
+            </span>
+          </div>
           {repo.stargazers_count > 0 && (
             <span className="flex items-center gap-1 text-xs text-muted-foreground font-mono">
               <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
@@ -105,7 +139,9 @@ export default function GitHubActivity() {
 
   useEffect(() => {
     fetchGitHubProjects(githubUsername).then((data) => {
-      setRepos(data);
+      // Exclude major core projects and the portfolio repository itself
+      const miniProjectsOnly = data.filter((repo) => !isExcludedRepo(repo));
+      setRepos(miniProjectsOnly);
       setLoading(false);
     });
   }, []);
@@ -115,7 +151,7 @@ export default function GitHubActivity() {
   return (
     <SectionWrapper
       id="github"
-      title="Mini Projects & Experiments 🚀"
+      title="Developer Playground & Experiments 🧪"
       subtitle="Public mini projects, technical prototypes, and learning repositories built while exploring new tools and frameworks"
     >
       <div className="max-w-6xl mx-auto">
