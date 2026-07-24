@@ -1,23 +1,24 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
 import { Sun, Moon, Menu, X } from 'lucide-react';
 
 const navItems = [
-  { name: 'ABOUT', href: '#about' },
-  { name: 'WORK', href: '#projects' },
-  { name: 'EXPERIENCE', href: '#experience' },
-  { name: 'CONTACT', href: '#contact' },
+  { name: 'ABOUT', href: '/' },
+  { name: 'PROJECTS', href: '/projects' },
+  { name: 'EXPERIENCE', href: '/experience' },
+  { name: 'BLOG & WRITING', href: '/blog' },
 ];
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState('');
   const [mounted, setMounted] = useState(false);
+  const pathname = usePathname();
   const { theme, setTheme } = useTheme();
 
   useEffect(() => {
@@ -26,20 +27,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollY = window.scrollY;
-      setIsScrolled(scrollY > 20);
-
-      // Section highlight logic on scroll
-      const sections = document.querySelectorAll('section[id]');
-      let current = '';
-      sections.forEach((section) => {
-        const sectionTop = (section as HTMLElement).offsetTop - 150;
-        const sectionHeight = (section as HTMLElement).offsetHeight;
-        if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
-          current = section.getAttribute('id') || '';
-        }
-      });
-      setActiveSection(current);
+      setIsScrolled(window.scrollY > 20);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -47,15 +35,24 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const checkIsActive = (href: string) => {
+    if (href === '/') {
+      return pathname === '/' || pathname === '/about';
+    }
+    if (href === '/projects') {
+      return pathname === '/projects' || pathname === '/skills';
+    }
+    return pathname.startsWith(href);
+  };
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 w-full flex justify-center pointer-events-none px-4 sm:px-6">
-      <div
-        className={`pointer-events-auto transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex items-center justify-between ${
-          isScrolled
-            ? 'w-full max-w-4xl py-2.5 px-6 my-3 rounded-full bg-card/85 backdrop-blur-2xl border border-border/80 shadow-[0_8px_32px_rgba(0,0,0,0.12)]'
-            : 'w-full max-w-7xl py-5 px-4 sm:px-6 my-0 rounded-none bg-transparent border-b border-transparent'
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 pointer-events-auto ${isScrolled
+        ? 'bg-card/85 backdrop-blur-2xl border-b border-border/80 shadow-[0_4px_20px_rgba(0,0,0,0.08)] py-3.5'
+        : 'bg-transparent border-b border-transparent py-5'
         }`}
-      >
+    >
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         {/* Left Side: Brand Logo */}
         <Link
           href="/"
@@ -69,17 +66,15 @@ export default function Navbar() {
         {/* Center Desktop Navigation */}
         <div className="hidden md:flex items-center gap-1 sm:gap-2">
           {navItems.map((item) => {
-            const sectionId = item.href.replace('#', '');
-            const isActive = activeSection === sectionId;
+            const isActive = checkIsActive(item.href);
             return (
               <Link
                 key={item.name}
                 href={item.href}
-                className={`relative text-xs font-bold tracking-widest px-3.5 py-1.5 rounded-full transition-all duration-200 ${
-                  isActive
-                    ? 'text-primary bg-primary/12 font-extrabold'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
-                }`}
+                className={`relative text-xs font-bold tracking-widest px-3.5 py-1.5 rounded-full transition-all duration-200 ${isActive
+                  ? 'text-primary bg-primary/12 font-extrabold'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                  }`}
               >
                 {item.name}
               </Link>
@@ -125,18 +120,16 @@ export default function Navbar() {
             className="absolute top-16 left-4 right-4 md:hidden pointer-events-auto bg-card/95 backdrop-blur-2xl border border-border/80 rounded-3xl px-6 py-6 flex flex-col gap-3 shadow-2xl"
           >
             {navItems.map((item) => {
-              const sectionId = item.href.replace('#', '');
-              const isActive = activeSection === sectionId;
+              const isActive = checkIsActive(item.href);
               return (
                 <Link
                   key={item.name}
                   href={item.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className={`text-sm font-bold tracking-widest px-4 py-2.5 rounded-xl transition-all duration-200 ${
-                    isActive
-                      ? 'text-primary bg-primary/10 font-extrabold'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
-                  }`}
+                  className={`text-sm font-bold tracking-widest px-4 py-2.5 rounded-xl transition-all duration-200 ${isActive
+                    ? 'text-primary bg-primary/10 font-extrabold'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                    }`}
                 >
                   {item.name}
                 </Link>

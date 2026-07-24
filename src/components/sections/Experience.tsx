@@ -32,51 +32,66 @@ const ExperienceCard = ({ experience, index }: { experience: typeof experiences[
         transition={{ duration: 0.5, delay: index * 0.15 }}
         className={`flex-1 ${isLast ? 'pb-0' : 'pb-10'}`}
       >
-        <div className="bg-card border border-border/60 rounded-2xl p-6 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300">
+          <div className="bg-card border border-border/60 rounded-3xl p-6 sm:p-8 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/8 transition-all duration-300">
           {/* Header */}
-          <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2 mb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-border/40">
             <div>
-              <h3 className="text-lg font-bold text-primary leading-tight">{experience.role}</h3>
-              <p className="text-base font-semibold text-foreground/90 mt-0.5">{experience.company}</p>
+              <h3 className="text-xl sm:text-2xl font-bold text-foreground group-hover:text-primary transition-colors leading-tight">
+                {experience.role}
+              </h3>
+              <p className="text-base font-semibold text-primary mt-1 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-primary inline-block" />
+                {experience.company}
+              </p>
             </div>
-            <div className="flex flex-col gap-1 sm:items-end flex-shrink-0">
-              <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground bg-muted/40 px-2.5 py-1 rounded-full">
-                <Calendar className="w-3 h-3" />
+            <div className="flex flex-wrap sm:flex-col gap-2 sm:items-end flex-shrink-0">
+              <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary bg-primary/10 border border-primary/20 px-3 py-1.5 rounded-full">
+                <Calendar className="w-3.5 h-3.5" />
                 {experience.period}
               </span>
-              <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
-                <MapPin className="w-3 h-3" />
+              <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground bg-muted/30 px-3 py-1 rounded-full">
+                <MapPin className="w-3.5 h-3.5" />
                 {experience.location}
               </span>
             </div>
           </div>
 
           {/* Achievements */}
-          <ul className="space-y-2 mb-5">
-            {experience.achievements.map((item, i) => (
-              <motion.li
-                key={i}
-                initial={{ opacity: 0, x: -12 }}
-                animate={inView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.3, delay: index * 0.15 + i * 0.06 }}
-                className="flex items-start gap-2.5 text-sm text-foreground/75 leading-relaxed"
-              >
-                <span className="text-primary mt-1.5 flex-shrink-0">▸</span>
-                {item}
-              </motion.li>
-            ))}
-          </ul>
+          <div className="mb-6">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">
+              Key Contributions & Accomplishments
+            </h4>
+            <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {experience.achievements.map((item, i) => (
+                <motion.li
+                  key={i}
+                  initial={{ opacity: 0, x: -12 }}
+                  animate={inView ? { opacity: 1, x: 0 } : {}}
+                  transition={{ duration: 0.3, delay: index * 0.15 + i * 0.04 }}
+                  className="flex items-start gap-2.5 text-sm text-foreground/80 leading-relaxed bg-muted/20 border border-border/30 p-3 rounded-xl"
+                >
+                  <span className="text-primary mt-0.5 font-bold flex-shrink-0">▸</span>
+                  <span>{item}</span>
+                </motion.li>
+              ))}
+            </ul>
+          </div>
 
           {/* Skills */}
-          <div className="flex flex-wrap gap-2">
-            {experience.skills.map((skill) => (
-              <span
-                key={skill}
-                className="px-2.5 py-0.5 text-xs font-medium rounded-md bg-primary/10 text-primary border border-primary/15"
-              >
-                {skill}
-              </span>
-            ))}
+          <div>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-2.5">
+              Technologies & Tools Used
+            </h4>
+            <div className="flex flex-wrap gap-2">
+              {experience.skills.map((skill) => (
+                <span
+                  key={skill}
+                  className="px-3 py-1 text-xs font-semibold rounded-lg bg-primary/10 text-primary border border-primary/20"
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </motion.div>
@@ -89,9 +104,9 @@ export default function Experience() {
     <SectionWrapper
       id="experience"
       title="Professional Experience"
-      subtitle="A journey through my professional growth and achievements"
+      subtitle="A journey through my professional growth, engineering roles, and achievements"
     >
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         {experiences.map((experience, index) => (
           <ExperienceCard key={experience.company} experience={experience} index={index} />
         ))}

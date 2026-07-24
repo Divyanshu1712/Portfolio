@@ -23,18 +23,17 @@ export default function Blog() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
-          className="max-w-lg mx-auto text-center py-10"
+          className="max-w-2xl mx-auto text-center py-12 px-6 rounded-3xl bg-card border border-border/60 shadow-md"
         >
           <div className="w-16 h-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto mb-5">
-            <Rss className="w-7 h-7 text-primary" />
+            <Rss className="w-7 h-7 text-primary animate-pulse" />
           </div>
-          <h3 className="text-lg font-semibold text-foreground mb-2">Writing coming soon</h3>
-          <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-            I&apos;m working on articles about FastAPI, Python automation, and full-stack development.
-            Stay tuned — or follow me on Twitter for updates.
+          <h3 className="text-xl font-bold text-foreground mb-2">Technical Articles Coming Soon</h3>
+          <p className="text-muted-foreground text-sm sm:text-base leading-relaxed mb-6 max-w-md mx-auto">
+            I&apos;m writing articles on FastAPI architecture, Python workflow automation, async microservices, and modern frontend design patterns.
           </p>
           <a href="https://x.com/Divyans19896602" target="_blank" rel="noopener noreferrer">
-            <Button variant="outline" className="gap-2">
+            <Button variant="outline" className="gap-2 rounded-full border-primary/30 hover:border-primary">
               Follow on Twitter / X
               <ArrowRight className="w-4 h-4" />
             </Button>
@@ -52,7 +51,7 @@ export default function Blog() {
     >
       <div
         ref={ref}
-        className="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+        className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
       >
         {blogPosts.map((post, index) => (
           <motion.a

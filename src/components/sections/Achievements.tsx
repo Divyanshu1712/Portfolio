@@ -29,7 +29,7 @@ export default function Achievements() {
       title="Achievements"
       subtitle="Recognition, awards, and certifications along the way"
     >
-      <div ref={ref} className="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-5">
+      <div ref={ref} className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-5">
         {achievements.map((item, index) => {
           const Icon = typeIcons[item.type];
           const colorClasses = typeColors[item.type];

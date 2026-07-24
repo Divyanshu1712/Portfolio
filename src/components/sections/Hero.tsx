@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import { ArrowRight, Star, Sparkles } from 'lucide-react';
+import { ArrowRight, Star, Sparkles, Briefcase } from 'lucide-react';
 import GiggleText from '@/components/shared/GiggleText';
 import { getGreetingData, type GreetingData } from '@/lib/greeting';
 
@@ -30,14 +30,37 @@ export default function Hero() {
 
   const messages = [
     {
+      id: 'currently',
+      text: 'Software Engineer @ BOT Mantra',
+      subtext: 'Building enterprise systems, microservices & automation',
+      icon: 'briefcase',
+    },
+    {
+      id: 'stack',
+      text: 'Python • FastAPI • React • Azure • Docker',
+      subtext: 'End-to-End Product Ownership & System Architecture',
+      icon: 'sparkles',
+    },
+    {
+      id: 'available',
+      text: 'Available for Full-Time & Freelance',
+      subtext: 'Open to high-impact projects & remote roles',
+      icon: 'pulse',
+    },
+    {
+      id: 'hobbies',
+      text: 'Clutching 1v3s in Valorant & Scoring in FIFA ⚽🎮',
+      subtext: 'Football, Dancing & Esports outside of engineering',
+      icon: 'sparkles',
+    },
+    {
       id: 'greeting',
       text: `${greeting.emoji} ${greeting.greeting}`,
       subtext: greeting.message,
       icon: 'greeting',
     },
-    { id: 'available', text: 'Available for new opportunities', icon: 'star' },
-    { id: 'sleep', text: 'Double-click me to sleep!', icon: 'pulse' },
     { id: 'role', text: 'Full Stack & Backend Specialist', icon: 'sparkles' },
+    { id: 'sleep', text: 'Double-click me to sleep!', icon: 'pulse' },
   ];
 
   // Auto-rotate single pop-up pill messages every 3.2 seconds
@@ -130,13 +153,16 @@ export default function Hero() {
               className="flex flex-col items-center gap-0.5 text-foreground"
             >
               <div className="flex items-center gap-2 whitespace-nowrap">
+                {messages[messageIndex].icon === 'briefcase' && (
+                  <Briefcase className="w-3.5 h-3.5 text-primary" />
+                )}
                 {messages[messageIndex].icon === 'star' && (
                   <Star className="w-3.5 h-3.5 text-primary fill-primary/30 animate-spin-slow" />
                 )}
                 {messages[messageIndex].icon === 'pulse' && (
                   <span className="flex h-2 w-2 relative">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
                   </span>
                 )}
                 {messages[messageIndex].icon === 'sparkles' && (
@@ -157,7 +183,7 @@ export default function Hero() {
       </div>
 
       {/* ── Main Full-Width Hero Interactive Display Title ── */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-center justify-center my-auto py-4">
+      <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-center justify-center my-auto py-2">
         {/* Line 1: Divyanshu */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}

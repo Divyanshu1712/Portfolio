@@ -5,18 +5,16 @@ import { socialLinks } from '@/data/social';
 import { Mail, Phone, MapPin, Github, Linkedin, Twitter, Instagram, ArrowUp } from 'lucide-react';
 
 const footerNav = [
-  { name: 'About', href: '#about' },
-  { name: 'Skills', href: '#skills' },
-  { name: 'Experience', href: '#experience' },
-  { name: 'Projects', href: '#projects' },
-  { name: 'Blog', href: '#blog' },
-  { name: 'Contact', href: '#contact' },
+  { name: 'About', href: '/' },
+  { name: 'Projects', href: '/projects' },
+  { name: 'Experience', href: '/experience' },
+  { name: 'Blog & Writing', href: '/blog' },
+  { name: 'Contact', href: '/#contact' },
 ];
 
 const contactDetails = [
   { icon: Mail, label: 'Email', value: 'divyanshusrivastava619@gmail.com', href: 'mailto:divyanshusrivastava619@gmail.com' },
   { icon: Phone, label: 'Phone', value: '+91 9026118735', href: 'tel:+919026118735' },
-  { icon: MapPin, label: 'Location', value: 'Basti, Uttar Pradesh, India', href: null },
 ];
 
 const socialIcons = [

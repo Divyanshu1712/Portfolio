@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Footer from './Footer';
 import Navbar from './Navbar';
 import CustomCursor from '@/components/shared/CustomCursor';
+import PageLoader from '@/components/shared/PageLoader';
 
 interface LayoutProps {
   children: ReactNode;
@@ -14,6 +15,7 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <>
       <CustomCursor />
+      <PageLoader />
       <Navbar />
       <AnimatePresence mode="wait">
         <motion.main

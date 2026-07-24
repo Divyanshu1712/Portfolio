@@ -15,7 +15,7 @@ export default function Education() {
       title="Education"
       subtitle="My academic journey and achievements"
     >
-      <div ref={ref} className="max-w-3xl mx-auto space-y-6">
+      <div ref={ref} className="max-w-5xl mx-auto space-y-6">
         {education.map((edu, index) => (
           <motion.div
             key={edu.institution}
